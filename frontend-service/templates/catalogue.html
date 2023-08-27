@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Urban Co.</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="nav-wrapper">
+                <nav>
+                    <div class="nav-left">
+                        <p class="logo d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">Urban Co.</p>
+                        <ul class="nav col-12 col-lg-auto justify-content-center mb-md-0">
+                            <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
+                            <li><a href="/categories" class="nav-link px-2 text-white">Categories</a></li>
+                            <li><a href="#" class="nav-link px-2 text-white">Promotions</a></li>
+                            <li><a href="#" class="nav-link px-2 text-white">View All Products</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-right">
+                        <button type="button" class="btn btn-outline-light me-2">Login</button>
+                        <button type="button" class="btn btn-warning me-2">Signup</button>
+                    </div>
+                </nav>
+            </div>
+            <div class="main-content">
+                <h1>Categories</h1>
+                {% for category in categories%}
+                    <div class="category">
+                        <h2 class="category-header"> {{category.categoryname}} </h2>
+                        <p class="category-temp">{{ category.categoryimage}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </body>
+</html>
