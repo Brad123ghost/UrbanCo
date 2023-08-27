@@ -4,18 +4,24 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Urban Co.</title>
+        <link rel="stylesheet" href="../static/css/main.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     </head>
     <body>
         <div class="wrapper">
             <div class="nav-wrapper">
-                <nav>
+                <nav class="nav">
                     <div class="nav-left">
-                        <p class="logo d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">Urban Co.</p>
-                        <ul class="nav col-12 col-lg-auto justify-content-center mb-md-0">
-                            <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
-                            <li><a href="/categories" class="nav-link px-2 text-white">Categories</a></li>
-                            <li><a href="#" class="nav-link px-2 text-white">Promotions</a></li>
-                            <li><a href="#" class="nav-link px-2 text-white">View All Products</a></li>
+                        <a class="logo" href="/">Urban Co.</a>
+                        <ul class="nav-links">
+                            <li><a href="/new">New</a></li>
+                            <li><a href="/tshirt">T Shirts</a></li>
+                            <li><a href="/jeans">Jeans</a></li>
+                            <li><a href="/hoodies-sweats">Hoodies & Sweats</a></li>
+                            <li><a href="/accessories">Accessories</a></li>
+                            <li><a href="/sales">Sales</a></li>
                         </ul>
                     </div>
                     <div class="nav-right">
@@ -25,15 +31,18 @@
                 </nav>
             </div>
             <div class="main-content">
-                <h1>Categories</h1>
-                {% for category in categories%}
-                    <div class="category">
-                        <h2 class="category-header"> {{category.categoryname}} </h2>
-                        <p class="category-temp">{{ category.categoryimage}}</p>
-                    </div>
-                {% endfor %}
+                <h1>Catalogue</h1>
+                <div class="product-grid-container">
+                    {% for product in products%}
+                        <div class="product-card">
+                            <h2 class="product-name">{{product.productname}}</h2>
+                            <p class="product-price">{{product.productprice}}</p>
+                            <img class="product-image" src="{{product.productimage}}" alt='Image of {{product.productname}}'/>
+                            <p class="product-desc">{{product.productdesc}}</p>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            
         </div>
     </body>
 </html>
