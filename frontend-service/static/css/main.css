@@ -58,3 +58,33 @@ body {
     height: 300px;
     width: 70%;
 }
+
+.main-content {
+    max-width: 80%;
+    min-width: 700px;
+    background-color: crimson;
+    margin: 0 auto;
+}
+
+.product-grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /* grid-gap: 10px; */
+}
+
+.swiper {
+    width: 95%;
+}
+
+.product-card  {
+    /* background-color: aqua; */
+    width: 300px;
+    border: solid 1px black;
+    margin: 10px 5px;
+    /* border-radius: 25px; */
+}
+
+.product-card img {
+    width: 100%;
+    /* border-radius: 23px; */
+}
