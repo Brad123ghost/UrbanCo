@@ -25,10 +25,6 @@ def index():
     
     return render_template("index.html")
 
-@app.route("/dashboard", methods=["GET"])
-def dashboard():
-    return render_template("dashboard.html")
-
 @app.route("/catalogue", methods=["GET"])
 def catalogue():
     
@@ -44,6 +40,20 @@ def catalogue():
 def product():
     return render_template("product.html")
 
+@app.route("/jeans", methods=["GET"])
+def jeans():
+    return render_template("jeans.html")
 
+@app.route("/hoodies-sweats", methods=["GET"])
+def hoodie_sweats():
+    return render_template("hoodies-sweats.html")
 
+# Admin Pages
+@app.route("/dashboard", methods=["GET"])
+def dashboard():
+    return render_template("dashboard.html")
+
+@app.route("/inventory", methods=["GET"])
+def inventory():
+    return render_template("inventory.html")
 app.run(host="0.0.0.0", port=5000, debug=True)
