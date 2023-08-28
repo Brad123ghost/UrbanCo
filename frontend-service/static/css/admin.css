@@ -1,0 +1,58 @@
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.card {
+    border: 1px solid black;
+    width: 250px;
+    height: 250px;
+}
+
+/* Product Pages */
+label,
+input[type="text"],
+input[type="number"],
+input[type="file"],
+input[type="password"] {
+    display: block;
+    padding: 0.5rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+textarea {
+    width: 400px;
+    margin-left: 0.5rem;
+}
+
+input[type="file"] {
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+textarea {
+    height: 6rem;
+}
+
+.container-inner {
+    margin-top: 10px;
+    margin-left: 0.5rem;
+}
+
+.container-inner p {
+    margin-bottom: 8px;
+}
+
+.form-button {
+    width: 400px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    margin: 1.5rem 2.5rem 1.5rem 0.5rem;
+    background: #2CB94D;
+    color: #fff;
+    border: none;
+    display: block;
+    padding: 0.5rem;
+}
