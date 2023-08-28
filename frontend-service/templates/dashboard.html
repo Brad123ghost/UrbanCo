@@ -1,47 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Urban Co. | Admin</title>
-        <link rel="stylesheet" href="../static/css/main.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <div class="wrapper">
-            <div class="nav-wrapper">
-                <nav class="nav">
-                    <div class="nav-left">
-                        <a class="logo" href="/">Urban Co.</a>
-                        <ul class="nav-links">
-                            <li><a href="/dashboard">Dashboard</a></li>
-                        </ul>
-                    </div>
-                    <div class="nav-right">
-                        <button type="button" class="btn btn-outline-light me-2">Login</button>
-                        <button type="button" class="btn btn-warning me-2">Signup</button>
-                    </div>
-                </nav>
-            </div>
-            <div class="main-content">
-                <div class="grid">
-                    <div class="card">
-                        <h1>Inventory</h1>
-                    </div>
-                    <div class="card">
-                        <h1>Promotions</h1>
-                    </div>
-                    <div class="card">
-                        <h1>Users</h1>
-                    </div>
-                    <div class="card">
-                        <h1>Order</h1>
-                    </div>
+{% extends "admin-base.html" %}
+    {% block content %}
+        <div class="main-content">
+            <div class="card-grid">
+                <div class="card">
+                    <h1>Inventory</h1>
+                </div>
+                <div class="card">
+                    <h1>Promotions</h1>
+                </div>
+                <div class="card">
+                    <h1>Users</h1>
+                </div>
+                <div class="card">
+                    <h1>Order</h1>
                 </div>
             </div>
-            
         </div>
-    </body>
-</html>
+    {% endblock %}
