@@ -34,12 +34,14 @@
                 <h1>Catalogue</h1>
                 <div class="product-grid-container">
                     {% for product in products%}
+                    <a href="{{url_for('view_product', productcode=product.productcode)}}">
                         <div class="product-card">
                             <h2 class="product-name">{{product.productname}}</h2>
                             <p class="product-price">{{product.productprice}}</p>
                             <img class="product-image" src="{{product.productimage}}" alt='Image of {{product.productname}}'/>
                             <p class="product-desc">{{product.productdesc}}</p>
                         </div>
+                    </a>
                     {% endfor %}
                 </div>
             </div>

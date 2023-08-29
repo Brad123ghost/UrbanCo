@@ -1,0 +1,36 @@
+{% extends "admin-base.html" %}
+    {% block content %}
+        <h1>Add a new product</h1>
+        <form action="/addnewproduct" method="POST" id="new-product-form">
+            <label for="productCode">Product Code:</label>
+            <input type="text" name="productcode" placeholder="Code">
+
+            <div class="container-inner">
+                <p>Choose the Category</p>
+                <div class="choosecategory">
+                    <select name="categorychosen" required>
+                        <option label="--"></option>
+                            <option value="1">Hoodies & Sweats</option>
+                            <option value="2">Jeans</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for="productname">Product Name:</label>
+            <input type="text" name="productname" placeholder="Name">
+
+            <label for="productprice">Product Price:</label>
+            <input type="number" min="0" step="0.01" name="productprice" placeholder="Price">
+
+            <label for="productprice">Product Stock:</label>
+            <input type="number" min="0" step="1" name="productstock" placeholder="Stock">
+
+            <label for="productdesc">Product Description:</label>
+            <textarea name="productdesc" id="productdesc" cols="30" rows="10" placeholder="Description"></textarea>
+            
+            <!-- <label>Select New Image File to Upload:</label>
+            <input type="file" name="file"> -->
+
+            <input class="form-button" type="submit" value="Submit Product Information">
+        </form>
+    {% endblock %}
