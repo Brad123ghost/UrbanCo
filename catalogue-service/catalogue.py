@@ -71,6 +71,11 @@ def listcatalogue():
     
     return {"success":True, "list":catalogue}
 
+@app.route("/catalogue/<productcategory>")
+def listchosencategory(productcategory):
+
+    jeancatalogue = get_chosen_category()
+
 def get_product_details(productcode):
     products = []
     # products.append(productcode)
