@@ -49,7 +49,8 @@ def product():
 
 @app.route("/jeans", methods=["GET"])
 def jeans():
-    return render_template("jeans.html")
+    jeanslist 
+    return render_template("jeans.html" products=jeanslist)
 
 @app.route("/hoodies-sweats", methods=["GET"])
 def hoodie_sweats():
