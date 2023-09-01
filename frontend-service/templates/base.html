@@ -9,6 +9,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+        <link rel="icon" type="image/icon" sizes="32x32" href="../static/favicon.png">
         <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     </head>
     <body>
@@ -16,11 +17,11 @@
             <div class="nav-wrapper">
                 <nav class="nav">
                     <div class="nav-left">
-                        <a class="logo" href="/">Urban Co.</a>
+                        <a href="/"><img id="logo" src="../static/logo.svg" alt="Urban Co. Logo"></a>
                         <ul class="nav-links">
                             <li><a href="/new">New</a></li>
                             <li><a href="/tshirt">T Shirts</a></li>
-                            <li><a href="/jeans">Jeans</a></li>
+                            <li><a href="{{url_for('cateloguecategory', productcategory='jeans')}}">Jeans</a></li>
                             <li><a href="/hoodies-sweats">Hoodies & Sweats</a></li>
                             <li><a href="/accessories">Accessories</a></li>
                             <li><a href="/sales">Sales</a></li>

@@ -18,7 +18,7 @@ services:
       - cataloguedbvolume:/varlib/postgresql/data
 
   catalogueservice:
-    image: catalogueservice:latest
+    image: bradleynz/urbanco:catalogueservice
     environment:
       DB_USER: urbanco
       DB_PASS: admin
@@ -28,7 +28,7 @@ services:
       - cataloguedbservice
 
   frontendservice:
-    image: frontendservice:latest
+    image: bradleynz/urbanco:frontendservice
     ports:
       - 80:5000
     links:

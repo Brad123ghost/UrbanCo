@@ -15,6 +15,7 @@ body {
     flex-direction: row;
     margin-bottom: 2rem;
     background-color: lime;
+    /* background-color: #97978D; */
     height: 80px;
     /* justify-content: center; */
     justify-content: space-between;
@@ -26,9 +27,12 @@ body {
     align-items: center;
 }
 
-.nav-left .logo {
-    padding: 20px;
-    background: skyblue;
+.nav-left #logo {
+    /* padding: 20px; */
+    background-color: skyblue;
+    width: 80px;
+    height: 80px;
+    display: block;
 }
 
 .nav-links {

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, Response, url_for
+from flask import Flask, request, render_template, redirect, Response, url_for, abort
 import requests
 import os
 
@@ -21,15 +21,29 @@ app = Flask(__name__)
 
 @app.route("/", methods=["POST", "GET"])
 def index():
-    if request.method == "POST":
-        name = request.form["name"]
-        categories = request.form["catalogue"]
+    # if request.method == "POST":
+    #     name = request.form["name"]
+    #     categories = request.form["catalogue"]
         
-        res = requests.post("http://local:5000/catalogue")
+    #     res = requests.post("http://local:5000/catalogue")
         
-        if res.status_code == 200:
-            return redirect("/catalogue")
-    
+    #     if res.status_code == 200:
+    #         return redirect("/catalogue")
+
+
+    # hoodieres = request.post("http://catalogueservice:5000/list/hoodies%20&%20\sweats")
+    # latesthoodieslist = []
+
+    # for products in hoodieres["list"]:
+    #     latesthoodieslist.append(Product(products[0],products[1],products[2],products[3],products[4]))
+
+    # jeanres = request.post("http://catalogueservice:5000/list/jeans")
+    # latestjeanslist = []
+
+    # for products in jeanres["list"]:
+    #     latestjeanslist.append(Product(products[0],products[1],products[2],products[3],products[4]))
+
+    # return products
     return render_template("index.html")
 
 @app.route("/catalogue", methods=["GET"])
@@ -47,14 +61,37 @@ def catalogue():
 def product():
     return render_template("product.html")
 
-@app.route("/jeans", methods=["GET"])
-def jeans():
-    jeanslist 
-    return render_template("jeans.html" products=jeanslist)
+@app.route("/<productcategory>", methods=["GET", "POST"])
+def cateloguecategory(productcategory):
+    res = requests.post("http://catalogueservice:5000/catalogue/category/" + str(productcategory)).json()
+    
+    categorylist = []
 
-@app.route("/hoodies-sweats", methods=["GET"])
-def hoodie_sweats():
-    return render_template("hoodies-sweats.html")
+    if len(res["list"]) == 0:
+        abort(404)
+
+    for product in res["list"]:
+        categorylist.append(Product(product[0],product[1],product[2],product[3],product[4]))
+
+    return render_template("jeans.html", jeans=categorylist)
+
+
+# @app.route("/hoodies-sweats", methods=["GET"])
+# def hoodie_sweats():
+#     return render_template("hoodies-sweats.html")
+
+# @app.route("/jeans", methods=["GET"])
+# def jeans():
+#     res = requests.post("http://catalogueservice:5000/catalogue/jeans").json()
+    
+#     latestjeanslist = []
+
+    
+
+#     for products in res["list"]:
+#         latestjeanslist.append(Product(products[0],products[1],products[2],products[3],products[4]))
+#     return render_template("jeans.html", jeans=latestjeanslist)
+#     # return latestjeanslist
 
 # Admin Pages
 @app.route("/dashboard", methods=["GET"])
@@ -67,18 +104,26 @@ def inventory():
 
 @app.route("/product/<productcode>", methods=["GET", "POST"])
 def view_product(productcode):
-    # res = requests.post("http://catalogueservice:5000/catalogue/list").json()
-    res = requests.post("http://catalogueservice:5000/catalogue/product/"+str(productcode)).json()
-    # res = url_for("http://catalogueservice/displayproduct", productcode=productcode).json()
-    product_details = []
+    res = requests.post("http://catalogueservice:5000/catalogue/product/" + str(productcode)).json()
 
+    if len(res["list"]) == 0:
+        abort(404)
+
+    product_details = []
+ 
     for product in res["list"]:
         product_details.append(Product(product[0],product[1],product[2],product[3],product[4]))
 
     return render_template("product.html", product_details=product_details)
 
+
 @app.route("/inventory/addnewproduct", methods=["POST"])
 def addnewproduct():
     return render_template("addnewproduct.html")
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('error.html'), 404
 app.run(host="0.0.0.0", port=5000, debug=True)
 # app.run(host="0.0.0.0", port=5000)
