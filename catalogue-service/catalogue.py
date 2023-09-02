@@ -54,8 +54,8 @@ def insert_data():
     ]
     SQL2 = "INSERT INTO CATEGORY (categoryname) VALUES (%s)"
     DATA2 = (
-        ("Hoodies & Sweats",),
-        ("Jeans",)
+        ("hoodies-sweats",),
+        ("jeans",)
     )
     SQL3 = "INSERT INTO PRODUCTCATEGORY VALUES (%s, %s)"
     DATA3 = [
