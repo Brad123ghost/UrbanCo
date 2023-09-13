@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+    {% block css %}
+        <link rel="stylesheet" href="../static/css/login-register.css">
+    {% endblock %}
+    {% block content %}
+        <div class="wrapper">
+            <div class="form-container">
+                <div class="form-btn">
+                    <span onclick="login()">Login</span>
+                    <span onclick="register()">Sign Up</span>
+                    <hr id="indicator" class="transition">
+                </div>
+                <form id="loginForm" action="?" class="transition" method="POST">
+                    <input type="email" name="email" placeholder="Email">
+                    <input type="password" name="password"  placeholder="Password">
+                    <button type="submit" name="login" class="btn">Login</button>
+                </form>
+                <form id="regForm" action="{{url_for('register')}}" class="transition" method="POST">
+                    <input type="text" name="firstname" placeholder="First Name">
+                    <input type="text" name="lastname" placeholder="Last Name">
+                    <input type="email" name="email" placeholder="Your Email">
+                    <input type="password" name="pwd" placeholder="Your Password">
+                    <input type="password" name="confirmpwd" placeholder="Confirm Password">
+                    <button type="submit" name="register" class="btn">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    {% endblock %}

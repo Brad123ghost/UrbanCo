@@ -11,44 +11,48 @@ body {
 }
 
 .nav {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 2rem;
-    background-color: lime;
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* margin-bottom: 2rem; */
+    /* background-color: lime; */
     /* background-color: #97978D; */
-    height: 80px;
+    /* height: 80px; */
     /* justify-content: center; */
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 
 .nav-left {
-    background-color: red;
-    display: flex;
-    align-items: center;
+    /* background-color: red; */
+    /* display: flex; */
+    /* align-items: center; */
 }
 
 .nav-left #logo {
     /* padding: 20px; */
-    background-color: skyblue;
-    width: 80px;
-    height: 80px;
-    display: block;
+    /* background-color: skyblue; */
+    /* width: 80px; */
+    /* height: 80px; */
+    /* display: block; */
 }
 
 .nav-links {
-    display: flex;
-    align-items: center;
+    /* display: flex; */
+    /* align-items: center; */
 }
 
 .nav-links li {
-    list-style: none;
-    padding: 0 20px 0 20px;
-    background-color: pink;
+    /* list-style: none; */
+    /* padding: 0 20px 0 20px; */
+    /* background-color: pink; */
 }
 
 .nav-links li a {
-    text-decoration: none;
-    color: black;
+    /* text-decoration: none; */
+    /* color: black; */
+}
+
+.accounts-btn {
+    padding-left: 15px;
 }
 
 .promotions {
@@ -63,11 +67,17 @@ body {
     width: 70%;
 }
 
+.content-wrapper {
+    background-color: #f5f2f0;
+}
+
 .main-content {
     max-width: 80vw;
     min-width: 700px;
-    /* background-color: crimson; */
+    min-height: calc(100vh - 80px);
+    /* background-color: bisque; */
     margin: 0 auto;
+    padding: 25px 0;
 }
 
 .product-grid-container {
@@ -88,6 +98,10 @@ body {
     padding-left: 5px;
 }
 
+.size-swiper-wrapper {
+}
+
+
 .product-card  {
     /* background-color: aqua; */
     height: 100%;
@@ -97,7 +111,27 @@ body {
     /* border-radius: 25px; */
 }
 
+.product-name {
+    font-size: .9rem;
+}
+
 .product-card img {
     width: 100%;
     /* border-radius: 23px; */
+}
+
+.footer-title {
+    font-size: 14px;
+}
+
+footer {
+    /* background-color: yellowgreen; */
+    padding-top: 25px;
+}
+
+.footer-copyright {
+    /* margin: 0 auto; */
+    padding-top: 25px;
+    text-align: center;
+    /* background-color: yellow; */
 }

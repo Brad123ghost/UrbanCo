@@ -131,17 +131,15 @@ def listchosencategory(productcategory):
     return {"status_code":200, "list":chosen_category}
     
 
-# @app.route("/list/<productcategory>", methods=["POST"])
-# def latest_chosen_category_products(productcategory):
-#     latest = get_chosen_category(productcategory)
-#     latest.reverse()
+@app.route("/list/<productcategory>", methods=["POST"])
+def latest_chosen_category_products(productcategory):
+    latest = get_chosen_category(productcategory)
+    # latest.reverse()
 
-#     del latest[:10]
+    # del latest[:10]
 
-#     if chosen_category.count() == 0:
-#         raise RequestError(404)
-
-#     return {"status_code":200, "list":latest}
+    # return latest
+    return {"status_code":200, "list":latest}
 
 def get_product_details(productcode):
     products = []
@@ -167,9 +165,23 @@ def displayproduct(productcode):
 
     return {"status_code":200, "list":product_details}
 
-
-time.sleep(12)
+# def checkExisting():
+#     CHECK_DB = "SELECT EXISTS ( SELECT 1 FROM information_schema.tables WHERE table_name = 'catalogue') AS table_existence"
+#     conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
+#     cursor = conn.cursor()
+#     cursor.execute(CHECK_DB)
+#     results = cursor.fetchall()
+    
+#     exists = results[0]
+    
+#     if exists is False:
+#         init_tables()
+#         insert_data()
+    
+    
+time.sleep(15)
 init_tables()
 insert_data()
+
 app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False)
 # app.run(host="0.0.0.0", port=5000)

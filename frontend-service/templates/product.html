@@ -1,7 +1,10 @@
 {% extends "base.html" %}
+    {% block css %}
+    <link rel="stylesheet" href="../static/css/product.css">
+    {% endblock %}
     {% block content %}
-        {% for product in product_details %}
-            <div class="product-wrapper">
+        <!-- {% for product in product_details %} -->
+            <!-- <div class="product-wrapper">
                 <div class="product-name" id="product-top">{{product.productname}}</div>
                 <div class="product-image" id="product-left"><img src="{{product.productimage}}" alt=""></div>
                 <div class="product-purchase" id="product-right">
@@ -9,6 +12,69 @@
                     <p>Add to cart</p>
                 </div>
                 <div class="product-description" id="product-bottom">{{product.productdesc}}</div>
+            </div> -->
+        <!-- {% endfor %} -->
+        <div class="product-wrapper">
+            <div class="product-image" id="product-left"><img src="../static/images/products/hoodies/bd-photosynthesis-hoodie-snow-marle-front-10004945.webp" alt=""></div>
+            <div class="product-purchase" id="product-right">
+                <p class="product-name" id="product-top">Photosythnesis Graphic Print Hoodie</p>
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+                <p class="product-price">$59.99</p>
+                <form>
+                    <input type="hidden" name="productcode" value="testing">
+                    <div class="size">
+                        <p>Select Size</p>
+                        <select name="size" id="size">
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                            <option value="XXXL">XXXL</option>
+                            <option value="XXXXL">XXXXL</option>
+                        </select>
+                    </div>
+                    <!-- <div class="quantity-container">
+                        <button type="button" class="minus" id="minus" name="action" value="minus"><i class="fas fa-minus"></i></button>
+                        <input id="item-quantity" name="quantity" class="quantity" readonly>
+                        <button type="button" class="plus" id="plus" name="action" value="plus"><i class="fas fa-plus"></i></button>
+                    </div> -->
+                    <button type="submit">Add to Cart</button>
+                </form>
             </div>
-        {% endfor %}
+            <div class="product-description" id="product-bottom"><span class="heading">About</span><br>Introducing our Photosynthesis Hoodie, crafted from a soft cotton blend for a comfortable composition. Our in-house designed graphics take inspiration from nature, creating a captivating visual experience. Whether you're a nature enthusiast or not, these graphics are not to be missed. Elevate your style with this winning hoodie choice that combines comfort, quality, and eye-catching design.</div>
+        </div>
+    {% endblock %}
+    {% block js %}
+    <script>
+        const totalCount = document.getElementById("item-quantity")
+
+        var count = 1;
+
+        totalCount.value = count;
+
+        const handleIncrement = () => {
+            count++;
+            totalCount.value = count;
+        };
+        const handleDecrement = () => {
+            if(count > 1) {
+                count--;
+            }
+            totalCount.value = count;
+        };
+
+        const decrementCount = document.getElementById("minus")
+        const incrementCount = document.getElementById("plus")
+
+        incrementCount.addEventListener("click", handleIncrement);
+        decrementCount.addEventListener("click", handleDecrement);
+    </script>
     {% endblock %}

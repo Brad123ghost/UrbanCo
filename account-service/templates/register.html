@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+    {% block content %}
+    <form action="{{url_for('register')}}" method="POST">
+        {{ form.hidden_tab }}
+        {{ form.csrf_token}}
+        {{ form.firstname }}
+        {{ form.lastname }}
+        {{ form.email }}
+        {{ form.password }}
+        {{ form.submit }}
+    </form>
+    {% endblock %}

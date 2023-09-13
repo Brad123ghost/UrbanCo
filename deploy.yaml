@@ -6,7 +6,7 @@ services:
     restart: always
     ports:
       - 9090:8080
-
+    
   cataloguedbservice:
     image: postgres
     restart: always
@@ -18,7 +18,8 @@ services:
       - cataloguedbvolume:/varlib/postgresql/data
 
   catalogueservice:
-    image: bradleynz/urbanco:catalogueservice
+    # image: bradleynz/urbanco:catalogueservice
+    image: catalogueservice:latest
     environment:
       DB_USER: urbanco
       DB_PASS: admin
@@ -27,12 +28,43 @@ services:
     links:
       - cataloguedbservice
 
-  frontendservice:
-    image: bradleynz/urbanco:frontendservice
+  # apigateway:
+  # # image: bradleynz/urbanco:apigateway
+  #   image: apigateway:latest
+  #   links:
+  #     - catalogueservice
+
+  accountdbservice:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: urbanco
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: accountdb
+    volumes:
+      - accountdbvolume:/varlib/postgresql/data
+
+  accountservice:
+    image: accountservice:latest
+    environment:
+      DB_USER: urbanco
+      DB_PASS: admin
+      DB: accountdb
+      DB_HOST: accountdbservice
     ports:
       - 80:5000
     links:
-      - catalogueservice
+      - accountdbservice
+
+  # frontendservice:
+  #   # image: bradleynz/urbanco:frontendservice
+  #   image: frontendservice:latest
+  #   ports:
+  #     - 80:5000
+  #   links:
+  #     - catalogueservice
+  #     - accountservice
 
 volumes:
   cataloguedbvolume:
+  accountdbvolume:

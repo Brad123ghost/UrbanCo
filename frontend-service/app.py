@@ -13,6 +13,7 @@ class Product(object):
     def __init__(self, productcode, productname, productprice, productdesc, productimage):
         self.productcode = productcode
         self.productname = productname
+        self.productprice = productprice
         self.productimage = productimage
         self.productdesc = productdesc
         self.productimage = productimage
@@ -20,41 +21,49 @@ class Product(object):
 app = Flask(__name__)
 
 @app.route("/", methods=["POST", "GET"])
-def index():
-    # if request.method == "POST":
-    #     name = request.form["name"]
-    #     categories = request.form["catalogue"]
-        
-    #     res = requests.post("http://local:5000/catalogue")
-        
-    #     if res.status_code == 200:
-    #         return redirect("/catalogue")
-
-
-    # hoodieres = request.post("http://catalogueservice:5000/list/hoodies%20&%20\sweats")
-    # latesthoodieslist = []
-
+def index():     
+    # hoodieres = requests.post("http://catalogueservice:5000/list/hoodies-sweats").json()
+    
+    # hoodielist = []
     # for products in hoodieres["list"]:
-    #     latesthoodieslist.append(Product(products[0],products[1],products[2],products[3],products[4]))
+    #     hoodielist.append(Product(products[0],products[1],products[2],products[3],products[4]))
 
-    # jeanres = request.post("http://catalogueservice:5000/list/jeans")
+    # jeanres = requests.post("http://catalogueservice:5000/list/jeans").json()
     # latestjeanslist = []
 
     # for products in jeanres["list"]:
     #     latestjeanslist.append(Product(products[0],products[1],products[2],products[3],products[4]))
 
-    # return products
     return render_template("index.html")
+    # return render_template("index.html", hoodies=hoodielist, jeans=latestjeanslist)
+
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    return redirect("http://accountservice:5000/login", code=200)
+    # return render_template("login.html")
+
+@app.route("/register", methods=["POST", "GET"])
+def register():
+    if request.method == "POST":
+        firstName = request.form["firstname"]
+        lastName = request.form["lastname"]
+        email = request.form["email"]
+        password = request.form["pwd"]
+        
+        return firstName
+    
+    return render_template("login.html")
 
 @app.route("/catalogue", methods=["GET"])
 def catalogue():
-    
-    res = requests.post("http://catalogueservice:5000/catalogue/list").json()
-    productslist = []
+    res = requests.post("http://apigateway:5000/catalogue/list").json()
+
+    productslist = res["list"]
     
     for products in res["list"]:
         productslist.append(Product(products[0],products[1],products[2],products[3],products[4]))
-    
+
+    # return res
     return render_template("catalogue.html", products=productslist)
 
 @app.route("/product", methods=["GET"])
@@ -64,7 +73,7 @@ def product():
 @app.route("/<productcategory>", methods=["GET", "POST"])
 def cateloguecategory(productcategory):
     res = requests.post("http://catalogueservice:5000/catalogue/category/" + str(productcategory)).json()
-    
+    # res = requests.post("http://apigateway:5000/api/list/" + str(productcategory)).json()
     categorylist = []
 
     if len(res["list"]) == 0:
@@ -73,25 +82,12 @@ def cateloguecategory(productcategory):
     for product in res["list"]:
         categorylist.append(Product(product[0],product[1],product[2],product[3],product[4]))
 
-    return render_template("jeans.html", jeans=categorylist)
+    productcategory = productcategory.capitalize()
 
-
-# @app.route("/hoodies-sweats", methods=["GET"])
-# def hoodie_sweats():
-#     return render_template("hoodies-sweats.html")
-
-# @app.route("/jeans", methods=["GET"])
-# def jeans():
-#     res = requests.post("http://catalogueservice:5000/catalogue/jeans").json()
-    
-#     latestjeanslist = []
-
-    
-
-#     for products in res["list"]:
-#         latestjeanslist.append(Product(products[0],products[1],products[2],products[3],products[4]))
-#     return render_template("jeans.html", jeans=latestjeanslist)
-#     # return latestjeanslist
+    if productcategory == "hoodies-sweats":
+        productcategory = "Hoodies & Sweats"
+        
+    return render_template("category.html", products=categorylist, category=productcategory)
 
 # Admin Pages
 @app.route("/dashboard", methods=["GET"])
