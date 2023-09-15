@@ -52,18 +52,18 @@ services:
       DB: accountdb
       DB_HOST: accountdbservice
     ports:
-      - 80:5000
+      - 5001:5000
     links:
       - accountdbservice
 
-  # frontendservice:
-  #   # image: bradleynz/urbanco:frontendservice
-  #   image: frontendservice:latest
-  #   ports:
-  #     - 80:5000
-  #   links:
-  #     - catalogueservice
-  #     - accountservice
+  frontendservice:
+    # image: bradleynz/urbanco:frontendservice
+    image: frontendservice:latest
+    ports:
+      - 80:5000
+    links:
+      - catalogueservice
+      - accountservice
 
 volumes:
   cataloguedbvolume:

@@ -1,12 +1,14 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, session, request
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
+from functools import wraps
 import psycopg2
 import os
 import time
+import requests
 
 DB_USER = os.environ["DB_USER"]
 DB_PASSWORD = os.environ["DB_PASS"]
@@ -23,14 +25,26 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
-    
+def roles_required(role):
+    def decorated_function(f):
+        @wraps(f)
+        def wrap(*args, **kwargs):
+            if current_user.role == role:
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for("login"))
+                
+        return wrap
+    return decorated_function
+
 class User(UserMixin):
-    def __init__(self, userid, firstname, lastname, email, password, active=True):
+    def __init__(self, userid, firstname, lastname, email, password, role, active=True):
         self.userid = userid
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.password = password
+        self.role = role
         self.active = active
     
     def get_id(self):
@@ -49,21 +63,21 @@ class User(UserMixin):
     
 @login_manager.user_loader
 def load_user(userid):
-    LOAD_USER = "SELECT * FROM USERS WHERE userid = %s"
+    LOAD_USER = "SELECT * FROM USERS INNER JOIN USERGROUPS ON usergroups.userid=users.userid INNER JOIN GROUPS ON groups.groupid=usergroups.groupid WHERE users.userid = %s"
     USERID = [userid]
     conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
     cursor = conn.cursor()
     cursor.execute(LOAD_USER, USERID)
     results = cursor.fetchall()
     
-    user = []
-    for userdata in results:
-        user.append(User(userdata[0], userdata[1], userdata[2], userdata[3], userdata[4]))
+    # user = []
+    # for userdata in results:
+    #     user.append(User(userdata[0], userdata[1], userdata[2], userdata[3], userdata[4], userdata[8]))
     
     cursor.close()
     conn.close()
     # print(user)
-    return User(results[0][0], results[0][1], results[0][2], results[0][3], results[0][4])
+    return User(results[0][0], results[0][1], results[0][2], results[0][3], results[0][4], results[0][8])
     
 class RegisterForm(FlaskForm):
     firstname = StringField(validators=[InputRequired()], render_kw={"placeholder": "First Name"})
@@ -150,42 +164,82 @@ def insert_data():
     cursor.close()
     conn.close()
 
+@app.route("/api/getuser/<userid>", methods=["POST", "GET"])
+def is_admin(userid):
+    USER_WITH_ROLE_SQL = "SELECT groupname FROM USERS INNER JOIN USERGROUPS ON usergroups.userid=users.userid INNER JOIN GROUPS ON groups.groupid=usergroups.groupid WHERE users.userid = %s"
+    USERID = [
+        (userid,)
+    ]
+    conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
+    cursor = conn.cursor()
+    cursor.execute(USER_WITH_ROLE_SQL, USERID)
+    results = cursor.fetchall()
+    
+    authorized = (results[0][0] == "Admin")
+    
+    if authorized:
+        return "Admin, Authorized"
+    
+    return "Customer, Unauthorized"
+    
+
 @app.route("/", methods=["POST", "GET"])
 def index():
-    return render_template("index.html")    
+    user = current_user
+    return render_template("index.html", user=current_user)    
 
-@app.route("/login", methods=["POST", "GET"])
+@app.route("/account/api/login", methods=["POST", "GET"])
 def login():
-    form = loginForm()
-    
-    if form.validate_on_submit():
-        SEARCH_USER = "SELECT * FROM USERS WHERE email = %s"
-        DATA = [
-            (form.email.data,)
-        ]
-        conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
-        cursor = conn.cursor()
-        cursor.execute(SEARCH_USER, DATA)
-        results = cursor.fetchall()
-        userlist = []
-        for row in results:
-            userlist.append(User(row[0], row[1], row[2], row[3], row[4]))
-            
-        user = []
-        if len(userlist) != 0:
-            if bcrypt.check_password_hash(userlist[0].password, form.password.data):
-                login_user(userlist[0])
-                return redirect(url_for('dashboard'))
-        
-        cursor.close()
-        conn.close()
+    email = request.form.get("email")
+    password = request.form.get("password")
 
-    return render_template("login.html", form=form)
+    test = [
+        (email),
+        (password)
+    ]
+    
+    return {"status_code":200, "list":test}
+    # form = loginForm()
+    
+    # # if form.validate_on_submit():
+    # SEARCH_USER = "SELECT * FROM USERS INNER JOIN USERGROUPS ON usergroups.userid=users.userid INNER JOIN GROUPS ON groups.groupid=usergroups.groupid WHERE email = %s"
+    # DATA = [
+    #     (data["email"],)
+    # ]
+    # conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
+    # cursor = conn.cursor()
+    # cursor.execute(SEARCH_USER, DATA)
+    # results = cursor.fetchall()
+    # userlist = []
+    # for row in results:
+    #     userlist.append(User(row[0], row[1], row[2], row[3], row[4], row[8]))
+        
+    # user = []
+    # if len(userlist) != 0:
+    #     if bcrypt.check_password_hash(userlist[0].password, data["password"]):
+    #         login_user(userlist[0])
+
+    #         # return current_user.role
+    #         return {"status_code":200, "message":"Hello"}
+    #         # return redirect(url_for('index'))
+    
+    # cursor.close()
+    # conn.close()
+
+    # return {"status_code":200, "message":"Success"}
+    # return render_template("login.html", form=form)
 
 @app.route("/dashboard", methods=["POST", "GET"])
 @login_required
+@roles_required("Admin")
 def dashboard():
-    return render_template("dashboard.html")
+    return ("Welcome to the Admin dashboard " + str(current_user.firstname) + ". You have " + str(current_user.role) + " access!")
+    # return render_template("dashboard.html")
+
+@app.route("/account", methods=["POST", "GET"])
+@login_required
+def account():
+    return render_template("account.html", user=current_user)
 
 @app.route("/logout", methods=["POST", "GET"])
 @login_required

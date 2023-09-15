@@ -1,15 +1,9 @@
 from flask import Flask, request, render_template, redirect, Response, url_for, abort
+from flask_login import UserMixin
 import requests
 import os
 
 class Product(object):
-    # def __init__(self, productcode, productname, productprice, productdesc, productimage):
-    #     self.productcode = productcode
-    #     self.productname = productname
-    #     self.productprice = productprice
-    #     self.productdesc = productdesc
-    #     self.productimage = productimage
-
     def __init__(self, productcode, productname, productprice, productdesc, productimage):
         self.productcode = productcode
         self.productname = productname
@@ -17,6 +11,30 @@ class Product(object):
         self.productimage = productimage
         self.productdesc = productdesc
         self.productimage = productimage
+
+class User(UserMixin):
+    def __init__(self, userid, firstname, lastname, email, password, role, active=True):
+        self.userid = userid
+        self.firstname = firstname
+        self.lastname = lastname
+        self.email = email
+        self.password = password
+        self.role = role
+        self.active = active
+    
+    def get_id(self):
+        return self.userid
+    
+    def is_active(self):
+        # Here you should write whatever the code is
+        # that checks the database if your user is active
+        return self.active
+    
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
 
 app = Flask(__name__)
 
@@ -39,8 +57,25 @@ def index():
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    return redirect("http://accountservice:5000/login", code=200)
-    # return render_template("login.html")
+    # return redirect("http://accountservice:5000/login", code=200)
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+        
+        form_data = {
+            "email": email,
+            "password": password
+        }
+        
+        res = requests.post("http://accountservice:5000/account/api/login", data=form_data).json()
+        
+        return res["list"]
+    
+    return render_template("login.html")
+
+# @app.route("/account/login", methods=["POST"])
+# def account_login(email, password):
+#     res = 
 
 @app.route("/register", methods=["POST", "GET"])
 def register():

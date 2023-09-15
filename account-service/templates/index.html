@@ -1,5 +1,14 @@
 {% extends "base.html" %}
     {% block content %}
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
+        {% if user.is_authenticated %}
+            <a href="/account">My Account</a>
+            {% if user.role == "Admin" %}
+                <a href="/dashboard">DashBoard</a>
+            {% endif %}
+            <br>
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        {% endif %}
     {% endblock %}
