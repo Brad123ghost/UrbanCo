@@ -28,3 +28,11 @@ function registererror(){
     regForm.classList.remove("transition")
     indicator.classList.remove("transition")
 }
+
+function check() {
+    if(document.getElementById("confirmpwd").value != document.getElementById("pwd").value) {
+        document.getElementById("confirmpwd").setCustomValidity("Password does not match")
+    } else {
+        document.getElementById("confirmpwd").setCustomValidity("")
+    }
+}

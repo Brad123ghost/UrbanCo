@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, session, request
+from flask import Flask, render_template, url_for, redirect, session, request, jsonify, json
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
@@ -9,6 +9,7 @@ import psycopg2
 import os
 import time
 import requests
+# import json
 
 DB_USER = os.environ["DB_USER"]
 DB_PASSWORD = os.environ["DB_PASS"]
@@ -60,7 +61,17 @@ class User(UserMixin):
 
     def is_authenticated(self):
         return True
-    
+
+def to_json(obj):
+    if isinstance(obj, User):
+        return {
+            "firstname": obj.firstname,
+            "lastname": obj.lastname,
+            "email": obj.email,
+            "password": obj.password,
+            "role": obj.role
+        }
+
 @login_manager.user_loader
 def load_user(userid):
     LOAD_USER = "SELECT * FROM USERS INNER JOIN USERGROUPS ON usergroups.userid=users.userid INNER JOIN GROUPS ON groups.groupid=usergroups.groupid WHERE users.userid = %s"
@@ -164,6 +175,50 @@ def insert_data():
     cursor.close()
     conn.close()
 
+@app.route("/api/checkuser/<email>", methods=["POST", "GET"])
+def check_user(email):
+    CHECK_EXISTING_USER = "SELECT * FROM USERS WHERE email=%s"
+    
+    EMAIL = [
+        (email,)
+    ]
+    
+    conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
+    cursor = conn.cursor()
+    cursor.execute(CHECK_EXISTING_USER, EMAIL)
+    results = cursor.fetchall()
+    
+    inDB = False
+    
+    if len(results) != 0:
+        # raise ValidationError("That email is already registered. Please Login instead.")
+        inDB = True
+        
+    cursor.close()
+    conn.close()
+    
+    return {"status_code": 200, "exists":inDB}
+
+@app.route("/api/loaduser/<userid>", methods=["POST", "GET"])
+def getUser(userid):
+    LOAD_USER = "SELECT * FROM USERS INNER JOIN USERGROUPS ON usergroups.userid=users.userid INNER JOIN GROUPS ON groups.groupid=usergroups.groupid WHERE users.userid = %s"
+    USERID = [
+        (userid,)
+    ]
+    conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
+    cursor = conn.cursor()
+    cursor.execute(LOAD_USER, USERID)
+    results = cursor.fetchall()
+    
+    userdata = []
+    for user in results:
+        userdata.append((user[0], user[1], user[2], user[3], user[4], user[8]))
+    
+    cursor.close()
+    conn.close()
+    # print(user)
+    return {"status_code": 200, "userdata":userdata}
+
 @app.route("/api/getuser/<userid>", methods=["POST", "GET"])
 def is_admin(userid):
     USER_WITH_ROLE_SQL = "SELECT groupname FROM USERS INNER JOIN USERGROUPS ON usergroups.userid=users.userid INNER JOIN GROUPS ON groups.groupid=usergroups.groupid WHERE users.userid = %s"
@@ -198,36 +253,37 @@ def login():
         (password)
     ]
     
-    return {"status_code":200, "list":test}
+    # return {"status_code":200, "list":test}
     # form = loginForm()
     
     # # if form.validate_on_submit():
-    # SEARCH_USER = "SELECT * FROM USERS INNER JOIN USERGROUPS ON usergroups.userid=users.userid INNER JOIN GROUPS ON groups.groupid=usergroups.groupid WHERE email = %s"
-    # DATA = [
-    #     (data["email"],)
-    # ]
-    # conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
-    # cursor = conn.cursor()
-    # cursor.execute(SEARCH_USER, DATA)
-    # results = cursor.fetchall()
-    # userlist = []
-    # for row in results:
-    #     userlist.append(User(row[0], row[1], row[2], row[3], row[4], row[8]))
+    SEARCH_USER = "SELECT * FROM USERS INNER JOIN USERGROUPS ON usergroups.userid=users.userid INNER JOIN GROUPS ON groups.groupid=usergroups.groupid WHERE email = %s"
+    DATA = [
+        (email)
+    ]
+    conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
+    cursor = conn.cursor()
+    cursor.execute(SEARCH_USER, DATA)
+    results = cursor.fetchall()
+    userlist = []
+    for row in results:
+        # userlist.append((row[0], row[1], row[2], row[3], row[4], row[8]))
+        userlist.append(User(row[0], row[1], row[2], row[3], row[4], row[8]))
         
-    # user = []
-    # if len(userlist) != 0:
-    #     if bcrypt.check_password_hash(userlist[0].password, data["password"]):
-    #         login_user(userlist[0])
+    user = []
+    if len(userlist) != 0:
+        if bcrypt.check_password_hash(userlist[0].password, password):
+            # login_user(userlist[0])
 
-    #         # return current_user.role
-    #         return {"status_code":200, "message":"Hello"}
-    #         # return redirect(url_for('index'))
+            # return current_user.role
+            return {"status_code":200, "user":json.loads(json.dumps(userlist[0].__dict__))}
+            # return redirect(url_for('index'))
     
-    # cursor.close()
-    # conn.close()
+    cursor.close()
+    conn.close()
 
-    # return {"status_code":200, "message":"Success"}
-    # return render_template("login.html", form=form)
+    # return {"status_code":200, "user":"Success"}
+    return render_template("login.html", form=form)
 
 @app.route("/dashboard", methods=["POST", "GET"])
 @login_required

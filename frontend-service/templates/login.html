@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-    {% block css %}
+    {% block head %}
+        <title>Login | Urban Co.</title>
         <link rel="stylesheet" href="../static/css/login-register.css">
     {% endblock %}
     {% block content %}
@@ -16,13 +17,27 @@
                     <button type="submit" name="login" class="btn">Login</button>
                 </form>
                 <form id="regForm" action="{{url_for('register')}}" class="transition" method="POST">
-                    <input type="text" name="firstname" placeholder="First Name">
-                    <input type="text" name="lastname" placeholder="Last Name">
-                    <input type="email" name="email" placeholder="Your Email">
-                    <input type="password" name="pwd" placeholder="Your Password">
-                    <input type="password" name="confirmpwd" placeholder="Confirm Password">
+                    <input type="text" name="firstname" placeholder="First Name" value="{{user.firstname}}" required>
+                    <input type="text" name="lastname" placeholder="Last Name" value="{{user.lastname}}"required>
+                    <input type="email" id="email" name="email" placeholder="Your Email" class="{{regerr}}" value="{{user.email}}" required>
+                    <div class="errormsg">{{errmsg}}</div>
+                    <input type="password" id="pwd" name="pwd" placeholder="Your Password" required>
+                    <input type="password" id="confirmpwd" name="confirmpwd" placeholder="Confirm Password" oninput="check(this)" required>
                     <button type="submit" name="register" class="btn">Sign Up</button>
                 </form>
             </div>
         </div>
+    {% endblock %}
+    {% block js %}
+        {% if exists == True %}
+            <script>
+                register()
+                document.getElementById("email").setCustomValidity("Email already exists")
+            </script>
+        {% else  %}
+            <script>
+                login()
+                document.getElementById("email").setCustomValidity("")
+            </script>
+        {% endif %}
     {% endblock %}

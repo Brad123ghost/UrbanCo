@@ -1,5 +1,9 @@
 from flask import Flask, request, render_template, redirect, Response, url_for, abort
-from flask_login import UserMixin
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
+from functools import wraps
 import requests
 import os
 
@@ -36,7 +40,55 @@ class User(UserMixin):
     def is_authenticated(self):
         return True
 
+
+class UserFormData(object):
+    def __init__(self, firstname, lastname, email):
+        self.firstname = firstname
+        self.lastname = lastname
+        self.email = email
+        
+SECRET_KEY = "urbancosecretkey"
+
 app = Flask(__name__)
+app.config['SECRET_KEY'] = SECRET_KEY
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+def roles_required(role):
+    def decorated_function(f):
+        @wraps(f)
+        def wrap(*args, **kwargs):
+            if current_user.is_authenticated and current_user.role == role:
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for("index"))
+                
+        return wrap
+    return decorated_function
+
+@login_manager.user_loader
+def load_user(userid):
+    res = requests.post("http://accountservice:5000/api/loaduser/" + str(userid)).json()
+    
+    user = []
+    
+    for userdata in res["userdata"]:
+        user.append((userdata[0], userdata[1], userdata[2], userdata[3], userdata[4], userdata[5]))
+    
+    return User(user[0][0], user[0][1], user[0][2], user[0][3], user[0][4], user[0][5])
+
+@app.context_processor
+def inject_user():
+    return dict(user=current_user)
+
+class RegisterForm(FlaskForm):
+    firstname = StringField("firstname", validators=[InputRequired("Please enter your first name")])
+    lastname = StringField("lastname", validators=[InputRequired("Please enter your last name")])
+    email = StringField("email", validators=[InputRequired("Please enter a valid email")])
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)])
+    confirmpassword = PasswordField(validators=[InputRequired(), Length(min=4, max=20), EqualTo("passowrd", message="Passwords must match")])
 
 @app.route("/", methods=["POST", "GET"])
 def index():     
@@ -66,16 +118,37 @@ def login():
             "email": email,
             "password": password
         }
-        
+         
         res = requests.post("http://accountservice:5000/account/api/login", data=form_data).json()
+        res = res["user"]
+        user = []
         
-        return res["list"]
+        user.append(User(res["userid"], res["firstname"], res["lastname"], res["email"], res["password"], res["role"]))
+        # return res["user"]["role"]
+        # for userdata in res["user"]:
+        #     return userdata[0]
+            # user.append(User(userdata["userid"], userdata.firstname, userdata.lastname, userdata.email, userdata.password, userdata.role))
+        
+        login_user(user[0])
+        
+        return redirect(url_for('index'))
     
-    return render_template("login.html")
+    return render_template("login.html", exists=False)
 
 # @app.route("/account/login", methods=["POST"])
 # def account_login(email, password):
 #     res = 
+
+@app.route("/account", methods=["POST", "GET"])
+@login_required
+def account():
+    return render_template("account.html")
+
+@app.route("/logout", methods=["POST", "GET"])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
@@ -85,9 +158,18 @@ def register():
         email = request.form["email"]
         password = request.form["pwd"]
         
-        return firstName
+        res = requests.post("http://accountservice:5000/api/checkuser/" + str(email)).json()
+        
+      
+        userData = (UserFormData("", "", ""))
+        
+        if res["exists"]:
+            userData = (UserFormData(firstName, lastName, email))
+            return render_template("login.html", exists=True, user=userData, errmsg="Email already exists. Please login or use a different email.", regerr="registrationerr")
+        else:
+            return redirect(url_for("index"))
     
-    return render_template("login.html")
+    return render_template("login.html", exists=False, user=userData, errmsg="", regerr="")
 
 @app.route("/catalogue", methods=["GET"])
 def catalogue():
@@ -119,13 +201,15 @@ def cateloguecategory(productcategory):
 
     productcategory = productcategory.capitalize()
 
-    if productcategory == "hoodies-sweats":
+    if productcategory == "Hoodies-sweats":
         productcategory = "Hoodies & Sweats"
-        
+     
     return render_template("category.html", products=categorylist, category=productcategory)
 
 # Admin Pages
 @app.route("/dashboard", methods=["GET"])
+@roles_required("Admin")
+@login_required
 def dashboard():
     return render_template("dashboard.html")
 
@@ -152,9 +236,15 @@ def view_product(productcode):
 def addnewproduct():
     return render_template("addnewproduct.html")
 
+@app.errorhandler(403)
+def page_forbidden(e):
+    return render_template('error.html', error="403 Forbidden")
+
 @app.errorhandler(404)
 def page_not_found(e):
     # note that we set the 404 status explicitly
-    return render_template('error.html'), 404
+    return render_template('error.html', error="404 Not Found")
+
+
 app.run(host="0.0.0.0", port=5000, debug=True)
 # app.run(host="0.0.0.0", port=5000)
