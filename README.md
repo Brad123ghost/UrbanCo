@@ -34,7 +34,6 @@ Then CD into each of the microservice folders from the ```Urbanco``` folder and 
   cd frontend-serivce
   docker build -t frontendservice:latest .
 ```
-
 ### Deploy the containers
 From the Urbanco folder
 Run the following command: 
@@ -44,3 +43,21 @@ After running the compose command, wait 12-20 seconds before trying to access HT
 
 To remove the compose: 
 ```Docker compose -f deploy.yaml down```
+
+# Accessing the Databases
+Once all the containers are running visit HTTP://localhost:9090
+
+Make sure to select **PostgreSQL** for the image
+#### Catalogue Database
+Server: ```cataloguedbservice``` <br>
+Username: ```urbanco```<br>
+Password: ```admin```<br>
+Database: ```cataloguedb```
+
+#### Account Database
+Server: ```accountdbservice```<br>
+Username: ```urbanco```<br>
+Password: ```admin```<br>
+Database: ```accountdb```
+
+
