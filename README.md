@@ -19,7 +19,7 @@ Open CMD or Terminal and CD into the main folder
 
 ### Build each image
 Then CD into each of the microservice folders from the ```Urbanco``` folder and build the docker image
-#### Account Serivce
+#### Account Service
 ```
   cd account-service
   docker build -t accountservice:latest .
