@@ -1,6 +1,16 @@
 ﻿# UrbanCo
+This Microservices prototype is being developed for a demonstration for INFS 605 Microservices. It features two selected microservices which are the Catalogue and Account.
 
-## How to Run
+## Frontend Service
+Shows the website view, calling either the catalogue or account service depending on the action performed
+
+## Catalogue Service
+Sends back the current products to display on the website
+
+## Account Service
+Handles user login and signup data and processes.
+
+# How to Run
 Download docker and docker-compose, alternatively, download docker desktop.
 
 ### CD into the folder
