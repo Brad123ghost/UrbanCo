@@ -24,14 +24,14 @@ Then CD into each of the microservice folders from the ```Urbanco``` folder and 
   cd account-service
   docker build -t accountservice:latest .
 ```
-#### Catalogue Serivce
+#### Catalogue Service
 ```
   cd catalogue-service
   docker build -t catalogueservice:latest .
 ```
-#### Frontend Serivce
+#### Frontend Service
 ```
-  cd frontend-serivce
+  cd frontend-service
   docker build -t frontendservice:latest .
 ```
 ### Deploy the containers
