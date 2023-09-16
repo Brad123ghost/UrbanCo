@@ -27,7 +27,7 @@ Then CD into each of the microservice folders from the ```Urbanco``` folder and 
 #### Catalogue Serivce
 ```
   cd catalogue-service
-  docker build -t catalogueserivce:latest .
+  docker build -t catalogueservice:latest .
 ```
 #### Frontend Serivce
 ```
