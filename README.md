@@ -39,13 +39,13 @@ From the Urbanco folder
 Run the following command: 
 ```Docker compose -f deploy.yaml up -d```
 
-After running the compose command, wait 12-20 seconds before trying to access HTTP://localhost as it will take some time for the database containers to fully load 
+After running the compose command, wait 12-20 seconds before trying to access HTTP://localhost, as the database containers will take some time to load fully. 
 
 To remove the compose: 
 ```Docker compose -f deploy.yaml down```
 
 # Accessing the Databases
-Once all the containers are running and 12-20 seconds has passed for the DB initialization, visit HTTP://localhost:9090
+Once all the containers are running and 12-20 seconds have passed for the DB initialization, visit HTTP://localhost:9090
 
 Make sure to select **PostgreSQL** for the image
 #### Catalogue Database
@@ -60,4 +60,11 @@ Username: ```urbanco```<br>
 Password: ```admin```<br>
 Database: ```accountdb```
 
-
+# Demo Accounts
+Two demo accounts have been set up: Admin and Customer. These accounts are set up to test the functionality of the admin dashboard which can be accessed via HTTP://localhost/dashboard if you are logged into the admin account.
+#### Admin Account
+Email: ```admin@urbanco.com```
+Password: ```password```
+#### Customer Account
+Email: ```customer1@gmail.com```
+Password: ```password```
