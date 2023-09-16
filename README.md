@@ -1,5 +1,6 @@
 ﻿# UrbanCo
 
+## How to Run
 Download docker and docker-compose, alternatively, download docker desktop.
 
 ### CD into the folder
@@ -28,6 +29,8 @@ Then CD into each of the microservice folders from the ```Urbanco``` folder and 
 From the Urbanco folder
 Run the following command: 
 ```Docker compose -f deploy.yaml up -d```
+
+After running the compose command, wait 12-20 seconds before trying to access HTTP://localhost as it will take some time for the database containers to fully load 
 
 To remove the compose: 
 ```Docker compose -f deploy.yaml down```
