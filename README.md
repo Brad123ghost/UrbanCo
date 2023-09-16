@@ -45,7 +45,7 @@ To remove the compose:
 ```Docker compose -f deploy.yaml down```
 
 # Accessing the Databases
-Once all the containers are running and 12-20 seconds have passed for the DB initialization, visit HTTP://localhost:9090
+Once all the containers are running and 12-20 seconds has passed for the DB initialization, visit HTTP://localhost:9090
 
 Make sure to select **PostgreSQL** for the image
 #### Catalogue Database
