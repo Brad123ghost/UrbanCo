@@ -4,27 +4,37 @@
         <link rel="stylesheet" href="../static/css/login-register.css">
     {% endblock %}
     {% block content %}
-        <div class="wrapper">
+        <div class="wrapper"> 
+            <div class="toast">
+                <div class="toast-header bg-success bg-opacity-25">
+                    <strong class="me-auto">Success!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body bg-success bg-opacity-10">
+                    <p>You may now continue to login to your account.</p>
+                </div>
+            </div>
             <div class="form-container">
                 <div class="form-btn">
                     <span onclick="login()">Login</span>
                     <span onclick="register()">Sign Up</span>
                     <hr id="indicator" class="transition">
                 </div>
-                <form id="loginForm" action="?" class="transition" method="POST">
-                    <input type="email" name="email" placeholder="Email">
-                    <input type="password" name="password"  placeholder="Password">
+                <form id="loginForm" action="{{url_for('login')}}" class="transition" method="POST">
+                    <div class="errormsg">{{logErrMsg}}</div>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password"  placeholder="Password" required>
                     <button type="submit" name="login" class="btn">Login</button>
                 </form>
-                <form id="regForm" action="{{url_for('register')}}" class="transition" method="POST">
-                    <input type="text" name="firstname" placeholder="First Name" value="{{user.firstname}}" required>
-                    <input type="text" name="lastname" placeholder="Last Name" value="{{user.lastname}}"required>
-                    <input type="email" id="email" name="email" placeholder="Your Email" class="{{regerr}}" value="{{user.email}}" required>
-                    <div class="errormsg">{{errmsg}}</div>
-                    <input type="password" id="pwd" name="pwd" placeholder="Your Password" required>
-                    <input type="password" id="confirmpwd" name="confirmpwd" placeholder="Confirm Password" oninput="check(this)" required>
-                    <button type="submit" name="register" class="btn">Sign Up</button>
-                </form>
+                    <form id="regForm" action="{{url_for('register')}}" class="transition" method="POST">
+                        <input type="text" name="firstname" placeholder="First Name" value="{{user.firstname}}" required>
+                        <input type="text" name="lastname" placeholder="Last Name" value="{{user.lastname}}"required>
+                        <input type="email" id="email" name="email" placeholder="Your Email" class="{{regerr}}" value="{{user.email}}" required>
+                        <div class="errormsg">{{regErrMsg}}</div>
+                        <input type="password" id="pwd" name="pwd" placeholder="Your Password" required>
+                        <input type="password" id="confirmpwd" name="confirmpwd" placeholder="Confirm Password" oninput="check(this)" required>
+                        <button type="submit" name="register" class="btn">Sign Up</button>
+                    </form>
             </div>
         </div>
     {% endblock %}
@@ -32,12 +42,15 @@
         {% if exists == True %}
             <script>
                 register()
-                document.getElementById("email").setCustomValidity("Email already exists")
             </script>
-        {% else  %}
+        {% else %}
             <script>
                 login()
-                document.getElementById("email").setCustomValidity("")
+            </script>
+        {% endif %}
+        {% if regsuccess == True %}
+            <script>
+                showToast()
             </script>
         {% endif %}
     {% endblock %}

@@ -243,7 +243,7 @@ def index():
     user = current_user
     return render_template("index.html", user=current_user)    
 
-@app.route("/account/api/login", methods=["POST", "GET"])
+@app.route("/api/login", methods=["POST", "GET"])
 def login():
     email = request.form.get("email")
     password = request.form.get("password")
@@ -283,7 +283,7 @@ def login():
     conn.close()
 
     # return {"status_code":200, "user":"Success"}
-    return render_template("login.html", form=form)
+    return {"status_code": 418, "message": "Invalid Credentials"}
 
 @app.route("/dashboard", methods=["POST", "GET"])
 @login_required
@@ -303,30 +303,79 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/register", methods=["POST", "GET"])
+def get_user_id(email):
+    GET_ID = "SELECT userid FROM USERS WHERE email = %s"
+    DATA = [(email,)]
+    
+    conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
+    cursor = conn.cursor()
+    
+    cursor.execute(GET_ID, DATA)
+    results = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    userid = results[0]
+    
+    return userid
+    
+@app.route("/api/register", methods=["POST", "GET"])
 def register():
-    form = RegisterForm()
-  
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        
-        INSERT_NEW_USER = "INSERT INTO USERS (firstname, lastname, email, password) VALUES (%s, %s, %s, %s)"
-        USER_DATA = [(form.firstname.data, form.lastname.data, form.email.data, hashed_password)]
-        
-        conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
+    DEFAULT_ROLE = 2
+    firstname = request.form.get("firstname")
+    lastname = request.form.get("lastname")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    
+    INSERT_NEW_USER = "INSERT INTO USERS (firstname, lastname, email, password) VALUES (%s, %s, %s, %s)"
+    USER_DATA = [(firstname, lastname, email, hashed_password)]
+    
+    
+    conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
+    cursor = conn.cursor()
+    cursor.executemany(INSERT_NEW_USER, USER_DATA)
+    conn.commit()
+    
+    userid = get_user_id(email)
+    
+    INSERT_USER_ROLE = "INSERT INTO USERGROUPS VALUES (%s, %s)"
+    ROLE_DATA = [
+        (userid, DEFAULT_ROLE)
+    ]
+    
+    cursor.executemany(INSERT_USER_ROLE, ROLE_DATA)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+    return {"status_code": 200, "message":"Success"}
 
-        cursor = conn.cursor()
-        cursor.executemany(INSERT_NEW_USER, USER_DATA)
-        conn.commit()
-        cursor.close()
-        conn.close()
+# @app.route("/register", methods=["POST", "GET"])
+# def register():
+#     form = RegisterForm()
+  
+#     if form.validate_on_submit():
+#         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         
-        return redirect(url_for("login"))   
+#         INSERT_NEW_USER = "INSERT INTO USERS (firstname, lastname, email, password) VALUES (%s, %s, %s, %s)"
+#         USER_DATA = [(form.firstname.data, form.lastname.data, form.email.data, hashed_password)]
         
-    return render_template("register.html", form=form)
+#         conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
+
+#         cursor = conn.cursor()
+#         cursor.executemany(INSERT_NEW_USER, USER_DATA)
+#         conn.commit()
+#         cursor.close()
+#         conn.close()
+        
+#         return redirect(url_for("login"))   
+        
+#     return render_template("register.html", form=form)
 
 time.sleep(15)
 init_tables()
 insert_data()
 
 app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False)
+# app.run(host="0.0.0.0", port=5000)

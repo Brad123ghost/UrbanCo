@@ -50,12 +50,19 @@ def insert_data():
         ('ab-twill-baggy-cargo-pant-iguana-front-10004572', 'Twill Baggy Cargo Pocket Pants', 69.99, 'Introducing the Urban Graphic Sweat - with a crew neck, drop shoulder design, and ribbed neckband, this sweatshirt offers both comfort and a fashionable edge. <br><br>Made for those who appreciate urban fashion and unique details, the Urban Graphic Sweat combines comfort with a touch of luxury. Its metallic gold symbols give it an elevated finish, ensuring you stand out from the crowd.', '../static/images/products/jeans/ab-twill-baggy-cargo-pant-iguana-front-10004572.webp'),
         ('ab-baggy-jean-blue-front-10004193', 'Long Rise Baggy Fit Jeans', 59.99, 'Introducing the Urban Graphic Sweat - with a crew neck, drop shoulder design, and ribbed neckband, this sweatshirt offers both comfort and a fashionable edge. <br><br>Made for those who appreciate urban fashion and unique details, the Urban Graphic Sweat combines comfort with a touch of luxury. Its metallic gold symbols give it an elevated finish, ensuring you stand out from the crowd.', '../static/images/products/jeans/ab-baggy-jean-blue-front-10004193.webp'),
         ('ab-21-taper-jean-solid-black-front-10001268', 'Tapered Fit Jeans', 59.99, 'Introducing the Urban Graphic Sweat - with a crew neck, drop shoulder design, and ribbed neckband, this sweatshirt offers both comfort and a fashionable edge. <br><br>Made for those who appreciate urban fashion and unique details, the Urban Graphic Sweat combines comfort with a touch of luxury. Its metallic gold symbols give it an elevated finish, ensuring you stand out from the crowd.', '../static/images/products/jeans/ab-21-taper-jean-solid-black-front-10001268.webp'),
-        ('ab-dad-fit-jean-swedish-blue-002-front-10003893', 'Dad Fit Relaxed Jeans', 49.99, 'Introducing the Urban Graphic Sweat - with a crew neck, drop shoulder design, and ribbed neckband, this sweatshirt offers both comfort and a fashionable edge. <br><br>Made for those who appreciate urban fashion and unique details, the Urban Graphic Sweat combines comfort with a touch of luxury. Its metallic gold symbols give it an elevated finish, ensuring you stand out from the crowd.', '../static/images/products/jeans/ab-dad-fit-jean-swedish-blue-002-front-10003893.webp')
+        ('ab-dad-fit-jean-swedish-blue-002-front-10003893', 'Dad Fit Relaxed Jeans', 49.99, 'Introducing the Urban Graphic Sweat - with a crew neck, drop shoulder design, and ribbed neckband, this sweatshirt offers both comfort and a fashionable edge. <br><br>Made for those who appreciate urban fashion and unique details, the Urban Graphic Sweat combines comfort with a touch of luxury. Its metallic gold symbols give it an elevated finish, ensuring you stand out from the crowd.', '../static/images/products/jeans/ab-dad-fit-jean-swedish-blue-002-front-10003893.webp'),
+        ('hb-organic-crew-tee-white-front-9840214', 'Organic Crew Neck Basic T-Shirt in White', 19.99, 'The Organic Crew Neck Tee. Our Classic Basic tee is a must have all year round staple. Knitted in ring spun and combed organic cotton, this new basic has a soft hand-feel, which is durable and longer lasting. Fashioned in a regular fit with a ribbed crew neck, in a midweight (180gsm) fabric.', '../static/images/products/tshirts/hb-organic-crew-tee-white-front-9840214.webp'),
+        ('ab-dragon-emb-box-tee-solid-black-front-10005036', 'Embroidered Dragon Box Fit T-Shirt in Solid Black', 39.99, 'Introducing the Urban Dragon Embroidery Box Fit Tee - the epitome of comfort and durability. Crafted from 100\% cotton and designed in a mid-weight fabric, this tee ensures a cozy feel that lasts. The standout feature of this tee is the captivating dragon embroidery on the shoulders, adding a touch of urban flair to your style. With a perfect balance of comfort and trendy detailing, the Urban Dragon Box Fit Tee is a must-have addition to your wardrobe.', '../static/images/products/tshirts/ab-dragon-emb-box-tee-solid-black-front-10005036.webp'),
+        ('dragon-ball-z-oversize-tee-washed-black-front-10004940', 'Dragon Ball Z Tee', 49.99, 'Calling all Dragon Ball Z enthusiasts! This iconic Oversize Tee is designed just for you, featuring an impressive large print of the legendary Dragon Ball Z crew on the front. Embrace your love for this cult-favorite anime and make a bold statement in the world of urban streetwear.<br><br>The tee features an oversize fit with drop shoulders and ample room through the body and arms.. It\'s time to power up your wardrobe and let your inner Saiyan shine!', '../static/images/products/tshirts/dragon-ball-z-oversize-tee-washed-black-front-10004940.webp'),
+        ('ab-sports-academy-box-tee-white-back-10004696', 'Balance Dragon Anime', 29.99, 'Introducing our Anime inspired Balance Dragon Tee, a must-have for every anime enthusiast. Experience unparalleled comfort with its regular fit, expertly crafted from 100\% cotton. Our in-house designers have created exclusive graphics that dominate the back and front, adding a unique and captivating touch to this standout piece. For a complete look, pair this tee with baggy denim and an overshirt. Make a bold statement with this exceptional tee.', '../static/images/products/tshirts/bd-balance-dragon-tee-washed-black-front-10005132.webp'),
+        ('ab-sports-academy-box-tee-white-front-10004696', 'Sports Academy Oversize Box Fit T-Shirt', 39.99, 'The Sports Academy Oversize Box Fit T shirt. Introduce a sporty element to your t shirt rotation with the Sports Academy Box Tee. Designed to be a relaxed fit tee with drop shoulder sleeves. Featuring a plaster salt puff print on the back and a small logo on the front. Style with a pair of track shorts to really embrace that Leisure Club vibe.', '../static/images/products/tshirts/ab-sports-academy-box-tee-white-front-10004696.webp'),
+        ('ab-manga-chest-emb-box-tee-white-front-10004527', 'Manga Embroidered Box Fit T-Shirt', 39.99, 'The Manga Chest Embroidered Box Tee. This oversized box fit tee is a must have staple supporting a trending urban outfit. Designed with a high neck and slouchy shoulders and a baggier fit through the body for a slight oversized look. Featuring an anime inspired embroidery on the front. Style this with a baggy or relaxed pair of denim or pants. Made with soft touch heavyweight cotton fabric that provides higher quality and lasting comfort. Style your t shirt with the Hallensteins Baggy pants and a bomber for a trend-setting outift.', '../static/images/products/tshirts/ab-manga-chest-emb-box-tee-white-front-10004527.webp')
     ]
     SQL2 = "INSERT INTO CATEGORY (categoryname) VALUES (%s)"
     DATA2 = (
         ("hoodies-sweats",),
-        ("jeans",)
+        ("jeans",),
+        ("tshirts",)
     )
     SQL3 = "INSERT INTO PRODUCTCATEGORY VALUES (%s, %s)"
     DATA3 = [
@@ -69,7 +76,13 @@ def insert_data():
         (8,2),
         (9,2),
         (10,2),
-        (11,2)
+        (11,2),
+        (12,3),
+        (13,3),
+        (14,3),
+        (15,3),
+        (16,3),
+        (17,3),
     ]
     conn = psycopg2.connect(host=DB_HOST, database=DB, user=DB_USER, password=DB_PASSWORD)
 

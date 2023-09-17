@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment | Urban Co.</title>
+    <link rel="stylesheet" href="../static/css/payment.css">
+</head>
+    <body>
+        <div class="container">
+            <div class="step-checkout">
+                <ul class="step-checkout_list" id="checkoutList">
+                    <!-- Checkout items/tabs -->
+                    <li role="button" class="step-checkout_item active" id="stepCheckoutItem1" tabindex="1"><span>Your details</span></li>
+                    <li role="button" class="step-checkout_item" id="stepCheckoutItem2" tabindex="1"><span>Shipping address</span></li>
+                    <li role="button" class="step-checkout_item" id="stepCheckoutItem3" tabindex="1"><span>Billing address</span></li>
+                    <li role="button" class="step-checkout_item" id="stepCheckoutItem4" tabindex="1"><span>Payment</span></li>
+                    <li class="step-checkout_content">
+                        <!-- Split Checkout steps from the Summary -->
+                        <div class="grid-x">
+                            <!-- Checkout step content here -->
+                            <div class="col">
+                            <div class="step-checkout_item_content" id="stepCheckoutContent1">
+                                <div class="step-box">
+                                    <h2>Step 1</h2>
+                                    <p>Hellow</p>
+                                </div>
+                            </div>
+                            <div class="step-checkout_item_content" id="stepCheckoutContent2">
+                                <div class="step-box">
+                                    <h2>Step 2</h2>
+                                </div>
+                            </div>
+                            <div class="step-checkout_item_content" id="stepCheckoutContent3">
+                                <div class="step-box">
+                                    <h2>Step 3</h2>
+                                </div>
+                            </div>
+                            <div class="step-checkout_item_content" id="stepCheckoutContent4">
+                                <div class="step-box">
+                                    <h2>Step 4</h2>
+                                </div>
+                            </div>
+                            </div>
+                            <!-- Summary content here -->
+                            <div class="col">
+                                <div class="step-checkout_summary">
+                                    <div class="summary-box">
+                                    <h2>Cart Summary</h2>
+                                    <p>Display progress of checkout here</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="checkoutList" id="back-btn" onclick="prev()">Return to Cart</button>
+                        <button type="button" class="checkoutList" onclick="next()">Continue</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script src="../static/js/payment.js"></script>
+    </body>
+</html>

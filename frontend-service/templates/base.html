@@ -5,13 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% block head %}
         {% endblock %}
-        <link rel="stylesheet" href="../static/css/main.css">
+        <link rel="icon" type="image/icon" sizes="32x32" href="../static/favicon.png">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
-        <link rel="icon" type="image/icon" sizes="32x32" href="../static/favicon.png">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../static/css/main.css">
+        <link rel="stylesheet" href="../static/css/dropdown.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     </head>
@@ -47,30 +49,37 @@
                       <a class="nav-item nav-link" href="/jeans">Jeans</a>
                       <a class="nav-item nav-link" href="/hoodies-sweats">Hoodies & Sweats</a>
                       <a class="nav-item nav-link" href="/accessories">Accessories</a>
-                      <a class="nav-item nav-link" href="/sales">Sales</a>
-                      <a class="nav-item nav-link" href="/new">New</a>
+                      <a class="nav-item nav-link" href="#">Sales</a>
+                      <a class="nav-item nav-link last-item" href="#">New</a>
+                    </div>
+                    <div>
+                        <form class="form-inline">
+                            <div class="input-group">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <form class="form-inline">
-                    <div class="input-group">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </div>
-                </form>
                 {% if user.is_authenticated %}
-                    <a href="/account">{{user.firstname}}</a>
-                    {% if user.role == "Admin" %}
-                        <a href="/dashboard">Dashboard</a>
-                    {% endif %}
-                    <a href="/logout">Logout</a>
+                    <div class="dropdown">
+                        <a href="/account" class="account"><i class="fa-solid fa-user"></i> {{user.firstname}}</a>
+                        <div class="dropdown-content">
+                            {% if user.role == "Admin" %}
+                                <a href="/dashboard">Admin Dashboard</a>
+                            {% endif %}
+                            <a href="/account">My Account</a>
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </div>
                 {% else %}
-                    <a href="/login">Login</a>
+                    <a href="/login" class="login-btn"><i class="fa-solid fa-user"></i> Login</a>
                 {% endif %}
                 <!-- <form class="form-inline accounts-btn" action="{{url_for('login')}}" method="POST">
                     <button class="btn">Login</button>
                     <button class="btn">Signup</button>
                 </form> --->
-                <a href="#" class="nav-item nam-link"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+                <a href="/cart" class="cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
             </nav>
             <div class="content-wrapper">
                 <div class="main-content">
@@ -137,7 +146,6 @@
                     <p>Copyright &copy; 2023 Urban Co., All rights reserved.</p>
                 </div>
             </div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
             <script src="../static/js/swiper.js"></script>
             <script src="../static/js/log-reg.js"></script>
             {% block js %}

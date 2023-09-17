@@ -92,24 +92,30 @@ class RegisterForm(FlaskForm):
 
 @app.route("/", methods=["POST", "GET"])
 def index():     
-    # hoodieres = requests.post("http://catalogueservice:5000/list/hoodies-sweats").json()
+    hoodieres = requests.post("http://catalogueservice:5000/list/hoodies-sweats").json()
     
-    # hoodielist = []
-    # for products in hoodieres["list"]:
-    #     hoodielist.append(Product(products[0],products[1],products[2],products[3],products[4]))
+    hoodielist = []
+    for products in hoodieres["list"]:
+        hoodielist.append(Product(products[0],products[1],products[2],products[3],products[4]))
 
-    # jeanres = requests.post("http://catalogueservice:5000/list/jeans").json()
-    # latestjeanslist = []
+    jeanres = requests.post("http://catalogueservice:5000/list/jeans").json()
+    latestjeanslist = []
 
-    # for products in jeanres["list"]:
-    #     latestjeanslist.append(Product(products[0],products[1],products[2],products[3],products[4]))
+    for products in jeanres["list"]:
+        latestjeanslist.append(Product(products[0],products[1],products[2],products[3],products[4]))
 
-    return render_template("index.html")
-    # return render_template("index.html", hoodies=hoodielist, jeans=latestjeanslist)
+    tshirtres = requests.post("http://catalogueservice:5000/list/tshirts").json()
+    tshirtlist = []
+
+    for products in tshirtres["list"]:
+        tshirtlist.append(Product(products[0],products[1],products[2],products[3],products[4]))
+
+    # return render_template("index.html")
+    return render_template("index.html", hoodies=hoodielist, jeans=latestjeanslist, tshirts=tshirtlist)
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    # return redirect("http://accountservice:5000/login", code=200)
+
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
@@ -119,25 +125,23 @@ def login():
             "password": password
         }
          
-        res = requests.post("http://accountservice:5000/account/api/login", data=form_data).json()
-        res = res["user"]
-        user = []
+        res = requests.post("http://accountservice:5000/api/login", data=form_data).json()
+        if res["status_code"] == 200:
+            res = res["user"]
+            user = []
+            
+            user.append(User(res["userid"], res["firstname"], res["lastname"], res["email"], res["password"], res["role"]))
+            
+            login_user(user[0])
+            return redirect(url_for('index'))
         
-        user.append(User(res["userid"], res["firstname"], res["lastname"], res["email"], res["password"], res["role"]))
-        # return res["user"]["role"]
-        # for userdata in res["user"]:
-        #     return userdata[0]
-            # user.append(User(userdata["userid"], userdata.firstname, userdata.lastname, userdata.email, userdata.password, userdata.role))
-        
-        login_user(user[0])
-        
-        return redirect(url_for('index'))
+        elif res["status_code"] == 418:
+            return render_template("login.html", exists=False, logErrMsg="The email or password you have entered is invalid.")
+    
+    if current_user.is_authenticated:
+        return redirect(url_for("account"))
     
     return render_template("login.html", exists=False)
-
-# @app.route("/account/login", methods=["POST"])
-# def account_login(email, password):
-#     res = 
 
 @app.route("/account", methods=["POST", "GET"])
 @login_required
@@ -152,6 +156,8 @@ def logout():
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
+    userData = (UserFormData(" ", " ", " "))
+    
     if request.method == "POST":
         firstName = request.form["firstname"]
         lastName = request.form["lastname"]
@@ -159,17 +165,26 @@ def register():
         password = request.form["pwd"]
         
         res = requests.post("http://accountservice:5000/api/checkuser/" + str(email)).json()
-        
-      
-        userData = (UserFormData("", "", ""))
+
+        form_data = {
+            "firstname": firstName,
+            "lastname": lastName,
+            "email": email,
+            "password": password
+        }
         
         if res["exists"]:
             userData = (UserFormData(firstName, lastName, email))
-            return render_template("login.html", exists=True, user=userData, errmsg="Email already exists. Please login or use a different email.", regerr="registrationerr")
+            return render_template("login.html", exists=True, user=userData, regErrMsg="Email already exists. Please login or use a different email.", regerr="registrationerror", regsuccess=False)
         else:
-            return redirect(url_for("index"))
+            res = requests.post("http://accountservice:5000/api/register", data=form_data)
+            return render_template("login.html", exists=False, regsuccess=True)
     
-    return render_template("login.html", exists=False, user=userData, errmsg="", regerr="")
+    return render_template("login.html", exists=False, user=userData, errmsg="", regerr="", regsuccess=False)
+
+@app.route("/cart", methods=["GET", "POST"])
+def cart():
+    return render_template("payment.html")
 
 @app.route("/catalogue", methods=["GET"])
 def catalogue():
@@ -203,6 +218,8 @@ def cateloguecategory(productcategory):
 
     if productcategory == "Hoodies-sweats":
         productcategory = "Hoodies & Sweats"
+    elif productcategory == "Tshirts":
+        productcategory = "T-Shirts"
      
     return render_template("category.html", products=categorylist, category=productcategory)
 

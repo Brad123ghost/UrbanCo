@@ -6,20 +6,20 @@
         </div>
         <!-- <div class="product-grid-container"> -->
         <div class="swiper" id="hoodie-swiper">
-            <h2>Hoodies & Sweats </h2>
+            <h2 class="category-title">Hoodies & Sweats </h2>
             <div class="swiper-wrapper">
-                <!-- {% for product in hoodies%} -->
+                {% for product in hoodies%}
                     <div class="swiper-slide">
-                        <!-- <a href="{{url_for('view_product', productcode=product.productcode)}}">
+                        <a href="{{url_for('view_product', productcode=product.productcode)}}" class="product-wrapper">
                             <div class="product-card">
-                                <h2 class="product-name">{{product.productname}}</h2>
-                                <p class="product-price">{{product.productprice}}</p>
                                 <img class="product-image" src="{{product.productimage}}" alt='Image of {{product.productname}}'/>
+                                <h2 class="product-name">{{product.productname}}</h2>
+                                <p class="product-price fw-bold">{{product.productprice}}</p>
                             </div>
-                        </a> -->
+                        </a>
                     </div>
-                <!-- {% endfor %} -->
-                <div class="swiper-slide">
+                {% endfor %}
+                <!-- <div class="swiper-slide">
                     <a href="/product" class="text-reset text-decoration-none">
                         <div class="product-card">
                             <img class="product-image" src="../static/images/products/hoodies/ab-dragon-emb-hoodie-white-front-10005040.webp" alt="Image of Dragon Embroidered Box Fit Hoodie">
@@ -36,7 +36,7 @@
                             <p class="product-price fw-bold">$59.99</p>
                         </div>
                     </a>
-                </div>
+                </div> -->
             </div>
             <!-- <div class="swiper-pagination"></div> -->
             <div class="swiper-button-prev"></div>
@@ -45,19 +45,39 @@
         </div>
 
         <div class="swiper" id="jean-swiper">
-            <h2>Jeans</h2>
+            <h2 class="category-title">Jeans</h2>
             <div class="swiper-wrapper">
-                <!-- {% for product in jeans%} -->
+                {% for product in jeans%}
                     <div class="swiper-slide">
-                        <!-- <a href="{{url_for('view_product', productcode=product.productcode)}}">
+                        <a href="{{url_for('view_product', productcode=product.productcode)}}" class="product-wrapper">
                             <div class="product-card">
-                                <h2 class="product-name">{{product.productname}}</h2>
-                                <p class="product-price">{{product.productprice}}</p>
                                 <img class="product-image" src="{{product.productimage}}" alt='Image of {{product.productname}}'/>
+                                <h2 class="product-name">{{product.productname}}</h2>
+                                <p class="product-price fw-bold">{{product.productprice}}</p>
                             </div>
-                        </a> -->
+                        </a>
                     </div>
-                <!-- {% endfor %} -->
+                {% endfor %}
+            </div>
+            <!-- <div class="swiper-pagination"></div> -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <!-- </div> -->
+        </div>
+        <div class="swiper" id="tshirt-swiper">
+            <h2 class="category-title">T-Shirts</h2>
+            <div class="swiper-wrapper">
+                {% for product in tshirts%}
+                    <div class="swiper-slide">
+                        <a href="{{url_for('view_product', productcode=product.productcode)}}" class="product-wrapper">
+                            <div class="product-card">
+                                <img class="product-image" src="{{product.productimage}}" alt='Image of {{product.productname}}'/>
+                                <h2 class="product-name">{{product.productname}}</h2>
+                                <p class="product-price fw-bold">{{product.productprice}}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
             <!-- <div class="swiper-pagination"></div> -->
             <div class="swiper-button-prev"></div>

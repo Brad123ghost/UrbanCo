@@ -1,9 +1,22 @@
 {% extends "base.html" %}
     {% block head %}
         <title>{{category}} | Urban Co.</title>
+        <link rel="stylesheet" href="../static/css/category.css">
     {% endblock %}
     {% block content %}
-    <div class="swiper" id="jeans-swiper">
+    <h2 class="category-title">{{category}}</h2>
+    <div class="grid">
+        {% for product in products%}
+            <a href="{{url_for('view_product', productcode=product.productcode)}}" class="product-wrapper">
+                <div class="product-card">
+                    <img class="product-image" src="{{product.productimage}}" alt='Image of {{product.productname}}'/>
+                    <h2 class="product-name">{{product.productname}}</h2>
+                    <p class="product-price fw-bold">{{product.productprice}}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    <!-- <div class="swiper" id="jeans-swiper">
         <h2>{{category}}</h2>
         <div class="swiper-wrapper">
             {% for product in products%}
@@ -17,9 +30,9 @@
                     </a>
                 </div>
             {% endfor %}
-        </div>
-        <!-- <div class="swiper-pagination"></div> -->
+        </div> -->
+        <!-- <div class="swiper-pagination"></div> 
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
-    </div>
+    </div> -->
     {% endblock %}
