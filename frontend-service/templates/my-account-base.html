@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+    {% block head %}
+        <link rel="stylesheet" href="../static/css/account.css">
+        {% block accounthead %}
+        {% endblock %}
+    {% endblock %}
+    {% block content %}
+        <div class="toast">
+            <div class="toast-header bg-success bg-opacity-25">
+                <strong class="me-auto">Payment Successful!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body bg-success bg-opacity-10">
+                <p>You can now view your order from your account.</p>
+            </div>
+        </div>
+        <div class="account-wrapper">
+            {% block page_title %}
+            {% endblock %}
+            <div class="account-grid">
+                <div class="account-left bg-light">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="/account" class="nav-link">Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/orders" class="nav-link">Orders</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="account-right">
+                    {% block account_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    {% block js %}
+        {% if orderSuccess == True %}
+            <script>
+                showToast()
+            </script>
+        {% endif %}
+    {% endblock %}

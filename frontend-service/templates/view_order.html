@@ -1,0 +1,92 @@
+{% extends "my-account-base.html" %}
+    {% block accounthead %}
+        <title>Order #39830 | Urban Co.</title>
+        <link rel="stylesheet" href="../static/css/order.css">
+    {% endblock %}
+    {% block page_title %}
+        <h3>Order #39830</h3>
+    {% endblock %}
+    {% block account_content %}
+        <div class="order-grid">
+            <div class="left">
+                <div class="col-md-6 offset-md-1 mt-2">
+                    <h4>Details</h4>
+                    <div class="details d-flex justify-content-between">
+                        <div>
+                            <p>Order Number:</p>
+                            <p>Order Status:</p>
+                            <p>Total:</p>
+                            <p>Delivery Address:</p>
+                        </div>
+                        <div>
+                            <p>#39830</p>
+                            <p><span class="notification-button notification-button--info">Confirmed</span></p>
+                            <p>$149.97</p>
+                            <p>Fake Adress</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="col-md-6 offset-md-1 mt-2">
+                    <h4>Status</h4>
+                    <ul class="timeline">
+                        <li>
+                            <p>Payment</p>
+                        </li>
+                        <li>
+                            <p>Confirmed</p>
+                        </li>
+                        <li class="not-met">
+                            <p>Fulfilling</p>
+                        </li>
+                        <li class="not-met">
+                            <p>Delivered</p>
+                        </li>
+                    </ul>
+                    <ul>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom">
+                <table class="table">
+                    <tbody>
+                        <tr></tr>
+                        <tr>
+                            <td>Product</td>
+                            <td>&nbsp;</td>
+                            <td>Quantity</td>
+                            <td>Size</td>
+                            <td>Price</td>
+                        </tr>
+                        <tr>
+                            <td><img src="../static/images/products/hoodies/ab-yoga-retreat-crew-green-front-10004852.webp" class="product-image" alt="Image of Yoga Retreat Crew Neck Sweat"></td>
+                            <td>Yoga Retreat Crew Neck Sweat</td>
+                            <td>Qty: 1</td>
+                            <td>L</td>
+                            <td>$49.99</td>
+                        </tr>
+                        <tr>
+                            <td><img src="../static/images/products/jeans/ab-21-skinny-jean-white-front-10001274.webp" class="product-image" alt="Image of Absent Skinny Jeans"></td>
+                            <td>Absent Skinny Jeans</td>
+                            <td>Qty: 1</td>
+                            <td>L</td>
+                            <td>$59.99</td>
+                        </tr>
+                        <tr>
+                            <td><img src="../static/images/products/tshirts/ab-sports-academy-box-tee-white-front-10004696.webp" class="product-image" alt="Image of Sports Academy Oversize Box Fit T-Shirt"></td>
+                            <td>Sports Academy Oversize Box Fit T-Shirt</td>
+                            <td>Qty: 1</td>
+                            <td>L</td>
+                            <td>$39.99</td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td colspan="6" style="text-align:right;">Total: $149.97</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endblock %}

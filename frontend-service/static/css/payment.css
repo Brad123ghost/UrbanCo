@@ -40,6 +40,7 @@ body {
 }
 .step-checkout {
   position: relative;
+  margin-top: 150px;
 }
 .step-checkout_list {
   list-style: none;
@@ -50,7 +51,6 @@ body {
   min-width: 0px;
 }
 .step-checkout_item {
-  cursor: pointer;
   box-sizing: border-box;
   float: none;
   width: auto;
@@ -206,4 +206,93 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.02em;
   border-bottom: 1px solid rgba(67, 74, 84, 0.1);
+}
+
+.cancel-payment-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.cancel-payment {
+  width: 75px;
+  height: 55px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 12px;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom-btn {
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 1px solid black;
+}
+
+.bottom-btn:hover {
+  opacity: .75;
+}
+
+.cont-shopping-btn {
+  background-color: lightgray;
+  margin-left: 15px;
+}
+
+.proceed-btn {
+  background-color: #50c878;
+  margin-right: 15px
+}
+
+td {
+  padding-right: 20px;
+}
+
+.product-image {
+  width: 75px
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.form-bottom {
+  width: 100%;
+}
+
+.top-inner-wrapper-left {
+  padding-right: 20px
+}
+
+.top-inner-wrapper-right {
+  padding-left: 20px;
+}
+
+label {
+  padding-top: 5px;
+}
+
+label,
+input[type="text"],
+input[type="number"],
+input[type="email"] {
+  display: block;
+}
+
+
+input[type="text"],
+input[type="number"],
+input[type="email"] {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
 }

@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment | Urban Co.</title>
     <link rel="stylesheet" href="../static/css/payment.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="icon" type="image/icon" sizes="32x32" href="../static/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
     <body>
+        <div class="cancel-payment-container">
+            <button type="button" class="cancel-payment" onclick="window.location.href='http://localhost/'"><i class="fa-solid fa-arrow-left"></i> Cancel</button>
+        </div>
         <div class="container">
             <div class="step-checkout">
                 <ul class="step-checkout_list" id="checkoutList">
@@ -20,40 +26,170 @@
                         <div class="grid-x">
                             <!-- Checkout step content here -->
                             <div class="col">
-                            <div class="step-checkout_item_content" id="stepCheckoutContent1">
-                                <div class="step-box">
-                                    <h2>Step 1</h2>
-                                    <p>Hellow</p>
+                                <div class="step-checkout_item_content" id="stepCheckoutContent1">
+                                    <div class="step-box">
+                                        <h2>Personal Details</h2>
+                                        <div class="form">
+                                            <div class="form-top">
+                                                <div class="top-inner-wrapper-left">
+                                                    <label for="firstname">First Name:</label>
+                                                    <input type="text" name="firstname" id="firstname" value="DummyData" required>
+                                                </div>
+                                                <div class="top-inner-wrapper-right">
+                                                    <label for="lastname">Last Name:</label>
+                                                    <input type="text" name="lastname" id="lastname" value="DummyData" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-bottom">
+                                                <div class="bottom-inner-wrapper">
+                                                    <label for="email">Email:</label>
+                                                    <input type="email" name="email" id="email" value="DummyData@gmail.com" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="step-checkout_item_content" id="stepCheckoutContent2">
-                                <div class="step-box">
-                                    <h2>Step 2</h2>
+                                <div class="step-checkout_item_content" id="stepCheckoutContent2">
+                                    <div class="step-box">
+                                        <h2>Shipping Details</h2>
+                                        <div class="form">
+                                            <div class="form-bottom">
+                                                <div class="bottom-inner-wrapper">
+                                                    <label for="streetadd">Street Address:</label>
+                                                    <input type="text" class="streetadd" name="streetadd" id="streetadd" value="123 Fake Street" >
+                                                </div>
+                                            </div>
+                                            <div class="form-top">
+                                                <div class="top-inner-wrapper-left">
+                                                    <label for="postcode">Postcode:</label>
+                                                    <input type="number" class="postcode" name="postcode" id="postcode" value="0000">
+                                                </div>
+                                                <div class="top-inner-wrapper-right">
+                                                    <label for="suburb">Suburb:</label>
+                                                    <input type="text" class="suburb" name="suburb" id="suburb" value="Fake Suburb">
+                                                </div>
+                                                <div class="top-inner-wrapper-left">
+                                                    <label for="city">City:</label>
+                                                    <input type="text" class="city" name="city" id="city" value="Fake City">
+                                                </div>
+                                                <div class="top-inner-wrapper-right">
+                                                    <label for="suburb">Country:</label>
+                                                    <input type="text" class="country" name="country" id="country" value="Fake Country">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="step-checkout_item_content" id="stepCheckoutContent3">
-                                <div class="step-box">
-                                    <h2>Step 3</h2>
+                                <div class="step-checkout_item_content" id="stepCheckoutContent3">
+                                    <div class="step-box">
+                                        <h2>Billing Details</h2>
+                                        <div class="form">
+                                            <div class="form-bottom">
+                                                <div class="bottom-inner-wrapper">
+                                                    <label for="billing-streetadd">Street Address:</label>
+                                                    <input type="text" class="streetadd" name="billing-streetadd" id="billing-streetadd" value="123 Fake Street" >
+                                                </div>
+                                            </div>
+                                            <div class="form-top">
+                                                <div class="top-inner-wrapper-left">
+                                                    <label for="billing-postcode">Postcode:</label>
+                                                    <input type="number" class="postcode" name="billing-postcode" id="billing-postcode" value="0000">
+                                                </div>
+                                                <div class="top-inner-wrapper-right">
+                                                    <label for="billing-suburb">Suburb:</label>
+                                                    <input type="text" class="suburb" name="billing-suburb" id="billing-suburb" value="Fake Suburb">
+                                                </div>
+                                                <div class="top-inner-wrapper-left">
+                                                    <label for="billing-city">City:</label>
+                                                    <input type="text" class="city" name="city" id="billing-city" value="Fake City">
+                                                </div>
+                                                <div class="top-inner-wrapper-right">
+                                                    <label for="billing-suburb">Country:</label>
+                                                    <input type="text" class="country" name="billing-country" id="billing-country" value="Fake Country">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="step-checkout_item_content" id="stepCheckoutContent4">
-                                <div class="step-box">
-                                    <h2>Step 4</h2>
+                                <div class="step-checkout_item_content" id="stepCheckoutContent4">
+                                    <div class="step-box">
+                                        <h2>Payment Details</h2>
+                                        <div class="form">
+                                            <div class="form-bottom">
+                                                <div class="bottom-inner-wrapper">
+                                                    <label for="cardnumber">Card number:</label>
+                                                    <input type="text" class="cardnumber" name="cardnumber" id="cardnumber" value="Card number" >
+                                                </div>
+                                                <div class="bottom-inner-wrapper">
+                                                    <label for="cardname">Holder name:</label>
+                                                    <input type="text" class="cardname" name="cardname" id="cardname" value="Name on card" >
+                                                </div>
+                                            </div>
+                                            <div class="form-top">
+                                                <div class="top-inner-wrapper-left">
+                                                    <label for="cardexp">Exp:</label>
+                                                    <input type="text" class="cardexp" name="cardexp" id="cardexp" value="Expiration date (MM/YY)">
+                                                </div>
+                                                <div class="top-inner-wrapper-right">
+                                                    <label for="cardcvv">CVV:</label>
+                                                    <input type="text" class="cardcvv" name="cardcvv" id="cardcvv" value="CVV">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="bottom">
+                                    <button type="button" class="checkoutList cont-shopping-btn bottom-btn" id="back-btn" onclick="prev()">Return to Cart</button>
+                                    <button type="button" class="checkoutList proceed-btn bottom-btn" id="next-btn" onclick="next()">Continue</button>
+                                </div>
                             </div>
                             <!-- Summary content here -->
                             <div class="col">
                                 <div class="step-checkout_summary">
                                     <div class="summary-box">
                                     <h2>Cart Summary</h2>
-                                    <p>Display progress of checkout here</p>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="5"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Product</td>
+                                                <td>&nbsp;</td>
+                                                <td>Qty</td>
+                                                <td>Size</td>
+                                                <td>Price</td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="../static/images/products/hoodies/ab-yoga-retreat-crew-green-front-10004852.webp" class="product-image" alt="Image of Yoga Retreat Crew Neck Sweat"></td>
+                                                <td>Yoga Retreat Crew Neck Sweat</td>
+                                                <td>Qty: 1</td>
+                                                <td>L</td>
+                                                <td>$49.99</td>
+                                            </tr>
+                                            <tr>
+                                                <td><img src="../static/images/products/jeans/ab-21-skinny-jean-white-front-10001274.webp" class="product-image" alt="Image of Absent Skinny Jeans"></td>
+                                                <td>Absent Skinny Jeans</td>
+                                                <td>Qty: 1</td>
+                                                <td>L</td>
+                                                <td>$59.99</td>
+                                              </tr>
+                                              <tr>
+                                                <td><img src="../static/images/products/tshirts/ab-sports-academy-box-tee-white-front-10004696.webp" class="product-image" alt="Image of Sports Academy Oversize Box Fit T-Shirt"></td>
+                                                <td>Sports Academy Oversize Box Fit T-Shirt</td>
+                                                <td>Qty: 1</td>
+                                                <td>L</td>
+                                                <td>$39.99</td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="6" style="text-align:right;">Total: $149.97</td>
+                                              </tr>
+                                        </tbody>
+                                    </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="checkoutList" id="back-btn" onclick="prev()">Return to Cart</button>
-                        <button type="button" class="checkoutList" onclick="next()">Continue</button>
                     </li>
                 </ul>
             </div>

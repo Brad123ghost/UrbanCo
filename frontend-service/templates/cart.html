@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+    {% block head %}
+        <title>Cart | Urban Co.</title>
+        <link rel="stylesheet" href="../static/css/cart.css">
+    {% endblock %}
+    {% block content %}
+    <table class="table">
+        <tbody>
+          <tr>
+            <td colspan="6"></td>
+          </tr>
+          <tr>
+            <td>Product</td>
+            <td>&nbsp;</td>
+            <td>Quantity</td>
+            <td>Size</td>
+            <td>Price</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><img src="../static/images/products/hoodies/ab-yoga-retreat-crew-green-front-10004852.webp" class="product-image" alt="Image of Yoga Retreat Crew Neck Sweat"></td>
+            <td>Yoga Retreat Crew Neck Sweat</td>
+            <td>Qty: 1</td>
+            <td>L</td>
+            <td>$49.99</td>
+            <td><i class="far fa-trash-alt fa-lg"></td>
+          </tr>
+          <tr>
+            <td><img src="../static/images/products/jeans/ab-21-skinny-jean-white-front-10001274.webp" class="product-image" alt="Image of Absent Skinny Jeans"></td>
+            <td>Absent Skinny Jeans</td>
+            <td>Qty: 1</td>
+            <td>L</td>
+            <td>$59.99</td>
+            <td><i class="far fa-trash-alt fa-lg"></td>
+          </tr>
+          <tr>
+            <td><img src="../static/images/products/tshirts/ab-sports-academy-box-tee-white-front-10004696.webp" class="product-image" alt="Image of Sports Academy Oversize Box Fit T-Shirt"></td>
+            <td>Sports Academy Oversize Box Fit T-Shirt</td>
+            <td>Qty: 1</td>
+            <td>L</td>
+            <td>$39.99</td>
+            <td><i class="far fa-trash-alt fa-lg"></td>
+          </tr>
+          <tr></tr>
+          <tr>
+            <td colspan="6" style="text-align:right;">Total: $149.97</td>
+          </tr>
+        </tbody>
+    </table>
+    <div class="bottom">
+        <button type="button" class="cont-shopping-btn bottom-btn" onclick="window.location.href='http://localhost/'">Continue Shopping</button>
+        <button type="button" class="proceed-btn bottom-btn" onclick="window.location.href='http://localhost/payment'">Proceed to Checkout</button>
+    </div>
+    {% endblock %}

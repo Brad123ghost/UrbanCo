@@ -148,6 +148,16 @@ def login():
 def account():
     return render_template("account.html")
 
+@app.route("/orders", methods=["POST", "GET"])
+@login_required
+def orders():
+    return render_template("orders.html", orderSuccess=False) 
+
+@app.route("/order/39830")
+@login_required
+def view_order():
+    return render_template("view_order.html")
+
 @app.route("/logout", methods=["POST", "GET"])
 @login_required
 def logout():
@@ -184,7 +194,16 @@ def register():
 
 @app.route("/cart", methods=["GET", "POST"])
 def cart():
+    return render_template("cart.html")
+
+@app.route("/payment", methods=["GET", "POST"])
+def payment():
     return render_template("payment.html")
+
+@app.route("/payment/success", methods=["POST", "GET"])
+@login_required
+def paymentSuccess():
+    return render_template("orders.html", orderSuccess=True)
 
 @app.route("/catalogue", methods=["GET"])
 def catalogue():
@@ -198,9 +217,9 @@ def catalogue():
     # return res
     return render_template("catalogue.html", products=productslist)
 
-@app.route("/product", methods=["GET"])
-def product():
-    return render_template("product.html")
+# @app.route("/product", methods=["GET"])
+# def product():
+#     return render_template("product.html")
 
 @app.route("/<productcategory>", methods=["GET", "POST"])
 def cateloguecategory(productcategory):

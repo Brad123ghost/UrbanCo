@@ -10,6 +10,11 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
+.toast {
+    position: absolute;
+    right: 10px;
+}
+
 .nav {
     /* display: flex; */
     /* flex-direction: row; */
@@ -94,6 +99,7 @@ body {
     max-width: 80vw;
     min-width: 700px;
     min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     /* background-color: bisque; */
     margin: 0 auto;
     padding: 25px 0;
@@ -161,4 +167,5 @@ footer {
 
 .footer-copyright p {
     padding-bottom: 1rem;
+    margin-bottom: 0;
 }

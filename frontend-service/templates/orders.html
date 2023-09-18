@@ -1,0 +1,36 @@
+{% extends "my-account-base.html" %}
+    {% block accounthead %}
+        <title>Orders | Urban Co.</title>
+    {% endblock %}
+    {% block page_title %}
+        <h3>Orders</h3>
+    {% endblock %}
+    {% block account_content %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Order#</td>
+                <td>&nbsp;</td>
+                <td>Total Items</td>
+                <td>Total Ordered</td>
+                <td>Status</td>
+                <td>Actions</td>
+            </tr>
+            <tr>
+                <td><img src="../static/images/products/hoodies/ab-yoga-retreat-crew-green-front-10004852.webp" class="product-image" alt="Image of Yoga Retreat Crew Neck Sweat"></td>
+                <td>Order: #39830</td>
+                <td>Items: 3</td>
+                <td>$149.97</td>
+                <td><span class="notification-button notification-button--info">Confirmed</span></td>
+                <td><a href="/order/39830"><i class="fa-regular fa-eye"></i> View</a></td>
+            </tr>
+            <td><img src="../static/images/products/tshirts/ab-sports-academy-box-tee-white-front-10004696.webp" class="product-image" alt="Image of Yoga Retreat Crew Neck Sweat"></td>
+                <td>Order: #36172</td>
+                <td>Items: 5</td>
+                <td>$239.95</td>
+                <td><span class="notification-button notification-button--success">Completed</span></td>
+                <td><a href="/order/39830"><i class="fa-regular fa-eye"></i> View</a></td>
+            </tr>
+        </tbody>
+    </table>
+    {% endblock %}
