@@ -1,4 +1,8 @@
-﻿# UrbanCo
+[![wakatime](https://wakatime.com/badge/github/Brad123ghost/UrbanCo.svg)](https://wakatime.com/badge/github/Brad123ghost/UrbanCo)
+---
+
+
+# UrbanCo
 This Microservices prototype is being developed for a demonstration for INFS 605 Microservices. It features two selected microservices which are the Catalogue and Account.
 
 #### Frontend Service
