@@ -3,7 +3,7 @@
 
 
 # UrbanCo
-This Microservices prototype is being developed for a demonstration for INFS 605 Microservices. It features two selected microservices which are the Catalogue and Account.
+This prototype is being developed to demonstrate our microservice for INFS605 Microservices. The two selected microservices are Catalogue and Account. This is built using Python and Flask as the micro web framework and using REST API to communicate between microservices.
 
 #### Frontend Service
 Shows the website view, calling either the catalogue or account service depending on the action performed
